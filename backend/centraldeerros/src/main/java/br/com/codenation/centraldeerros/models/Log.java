@@ -40,6 +40,9 @@ public class Log implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Nivel nivel;
 	
+	@Enumerated(EnumType.STRING)
+	private Status status;
+	
 	@Column(nullable = false)
 	private LocalDate dataEvento;
 	
