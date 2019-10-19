@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping()
+	@GetMapping("/")
 	public ResponseEntity<?> getAllUsers(){
 		List<User> user = userService.findAll();
 		
@@ -31,9 +32,19 @@ public class UserController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateUser(@PathVariable("id") Long id){
+		Optional<User> user = userService.findById(id);
+		
+		if(user.isPresent()) {
+			return ResponseEntity.ok(user.get());
+		}
+		return ResponseEntity.notFound().build();
+	}
 	
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> getUserById(@PathVariable("id") long id){
+	public ResponseEntity<?> getUserById(@PathVariable("id") Long id){
 		Optional<User> user = userService.findById(id);
 		
 		if(user.isPresent()) {
@@ -52,12 +63,13 @@ public class UserController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@PostMapping
+	@PostMapping("/")
 	public ResponseEntity<?> insertUser(@RequestBody User user){
 		userService.save(user);
 		return ResponseEntity.ok(user);
 	}
-	@PostMapping("/all")
+
+	@PostMapping("/")
 	public ResponseEntity<?> insertAllUsers(@RequestBody List<User> user){
 		userService.saveAll(user);
 		return ResponseEntity.ok(user);
