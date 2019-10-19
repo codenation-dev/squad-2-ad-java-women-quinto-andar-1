@@ -11,7 +11,7 @@
 	<groupId>br.com.codenation</groupId>
 	<artifactId>centraldeerros</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>centraldeerros</name>
+	<name>errorcenter</name>
 	<description>Projeto Final da Aceleração da Codenation + Quinto Andar. Aplicação Rest para criação de Central de Erros</description>
 
 	<properties>
@@ -54,5 +54,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

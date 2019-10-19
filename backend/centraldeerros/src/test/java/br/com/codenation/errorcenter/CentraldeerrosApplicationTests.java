@@ -1,4 +1,4 @@
-package br.com.codenation.centraldeerros;
+package br.com.codenation.errorcenter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

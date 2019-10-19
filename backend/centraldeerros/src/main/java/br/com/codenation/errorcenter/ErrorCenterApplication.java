@@ -1,12 +1,12 @@
-package br.com.codenation.centraldeerros;
+package br.com.codenation.errorcenter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CentraldeErrosApplication {
+public class ErrorCenterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CentraldeErrosApplication.class, args);
+		SpringApplication.run(ErrorCenterApplication.class, args);
 	}
 }
