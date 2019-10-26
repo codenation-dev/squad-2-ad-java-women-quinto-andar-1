@@ -31,8 +31,8 @@ public class Log implements Serializable{
 	private User user;
 	
 	@Column(length = 50, nullable = false)
-	private String title
-	;
+	private String title;
+	
 	@Column(length = 500, nullable = false)
 	@Size(max = 500)
 	private String description;

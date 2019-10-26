@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.codenation</groupId>
-	<artifactId>centraldeerros</artifactId>
+	<artifactId>errorcenter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>errorcenter</name>
 	<description>Projeto Final da Aceleração da Codenation + Quinto Andar. Aplicação Rest para criação de Central de Erros</description>
