@@ -8,7 +8,7 @@ const Field = (props) => (
     <Label>{props.label}</Label>
     <Input 
       name={props.name}
-      type={props.inputType}
+      type={props.type}
       onChange={props.onChange}
       value={props.value}
       {...props}

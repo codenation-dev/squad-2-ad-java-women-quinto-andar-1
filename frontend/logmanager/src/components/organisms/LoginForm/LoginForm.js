@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import './LoginForm.css';
 import Card from '../../atoms/Card/Card';
 import Form from '../../atoms/Form/Form';
@@ -11,20 +12,25 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
       <Field
         label="E-mail"
         name="email"
-        inputType="text"
+        type="text"
         onChange={onChange}
         value={props.email}
       />
       <Field
         label="Senha"
         name="password"
-        inputType="password"
+        type="password"
         onChange={onChange}
         value={props.password}
       />
       <Button>
         Logar
       </Button>
+      <Link to='/sign-up'>
+        <Button>
+          Cadastrar
+        </Button>
+      </Link>
     </Form>
   </Card>
 );
