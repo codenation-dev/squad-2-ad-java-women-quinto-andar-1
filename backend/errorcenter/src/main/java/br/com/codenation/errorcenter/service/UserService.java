@@ -1,6 +1,5 @@
 package br.com.codenation.errorcenter.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +22,20 @@ public class UserService{
 		return userRepository.findByEmail(email);
 	}
 
-	public void save(List<User> user) {
+	public void save(User user) {
 		
 		/*Verifica se o email já existe*/
-		Optional<User> userCheck = findByEmail(((User) user).getEmail());
+		Optional<User> userCheck = findByEmail(user.getEmail());
 		
 		if (userCheck.isPresent()) {
 			/*User já cadastrado com esse email*/
 			/*TODO Retornar Exception ERROR_USER_EMAIL_EXISTS("Email já cadastrado.")*/
 		} else {
 			/*Manipula a senha para encriptar*/
-			String passwordEncoded = bcrypt.encode(((User) user).getPassword());
-			((User) user).setPassword(passwordEncoded);
+			String passwordEncoded = bcrypt.encode(user.getPassword());
+			user.setPassword(passwordEncoded);
 			
-			userRepository.saveAll(user);
-			
+			userRepository.save(user);		
 		}
 	}
 	
