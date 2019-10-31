@@ -1,8 +1,11 @@
 package br.com.codenation.errorcenter.service;
 
 import java.util.Optional;
+import java.util.UUID;
 
+import br.com.codenation.errorcenter.security.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class UserService{
 	@Autowired
 	private UserRepository userRepository;
 	
-	BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+	private BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 
 
 	public Optional<User> findByEmail(String email) {
@@ -34,33 +37,30 @@ public class UserService{
 			/*Manipula a senha para encriptar*/
 			String passwordEncoded = bcrypt.encode(user.getPassword());
 			user.setPassword(passwordEncoded);
+
+			// cria um token padrão UUID random pro usuário, que vamos exibir no front
+			user.setTokenAccess(UUID.randomUUID().toString());
 			
 			userRepository.save(user);		
 		}
 	}
-	
-	
-	public Optional<User> login(String rawPassword, String email) {
-		
-		try {
-			
-			/*Buscar User por email*/
-			Optional<User> user = findByEmail(email);
 
-			if (!user.isPresent()) {
-				/*Nenhum user encontrado com esse email*/
-				/*TODO Retornar Exception ERROR_USER_FIND_EMAIL("Email nao encontrado"),*/
-			} else {
-				
-			    if (bcrypt.matches(rawPassword, user.get().getPassword())) {
-			    	return user; /*User validado!*/
-				}	
+	public Pair<String, User> authenticateUser(String email, String rawPassword) throws Exception {
+		Optional<User> user = userRepository.findByEmail(email);
+
+		if (user.isPresent()) {
+			if (bcrypt.matches(rawPassword, user.get().getPassword())) {
+				String userToken = user.get().getTokenAccess();
+				String jwtToken = JwtToken.addJwtToken(userToken);
+
+				return Pair.of(jwtToken, user.get());
 			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
+
+			// TODO formatar os erros pra retornar o status também
+			throw new Exception("Senha incorreta");
 		}
-		
-		return null; /*Nao validado!*/	
+
+		// TODO formatar os erros pra retornar o status também
+		throw new Exception("Usuário não encontrado");
 	}
 }
