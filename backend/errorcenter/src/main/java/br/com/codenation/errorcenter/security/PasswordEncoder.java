@@ -1,4 +1,4 @@
-package br.com.codenation.errorcenter.utils;
+package br.com.codenation.errorcenter.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
