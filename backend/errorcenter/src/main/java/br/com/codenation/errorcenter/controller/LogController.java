@@ -29,4 +29,5 @@ public class LogController {
     public ResponseEntity<?> addNewLog(HttpServletRequest request, @RequestBody Log log) throws Exception {
         Log newLog = logService.saveNewLog(log);
         return ResponseEntity.ok(newLog);
+    }
 }
