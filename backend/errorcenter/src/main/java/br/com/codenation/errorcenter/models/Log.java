@@ -1,6 +1,7 @@
 package br.com.codenation.errorcenter.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
@@ -29,7 +30,10 @@ public class Log implements Serializable{
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long id;
 
-	// TODO: insert logs não está gravando o user, procurar por desserialização
+	@JsonProperty("user")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "user", scope = User.class)
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonBackReference("teste")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

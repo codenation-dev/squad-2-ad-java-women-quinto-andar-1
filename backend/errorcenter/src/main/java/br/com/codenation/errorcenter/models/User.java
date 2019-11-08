@@ -1,5 +1,7 @@
 package br.com.codenation.errorcenter.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@JsonManagedReference("teste")
 	private long id;
 	
 	@Column(nullable = false)

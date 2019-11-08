@@ -1,6 +1,6 @@
 package br.com.codenation.errorcenter.dtos;
 
-public class UserLoginRequestBody {
+public class UserLoginRequestDto {
     public String email;
     public String password;
 }
