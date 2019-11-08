@@ -17,8 +17,8 @@ public class JwtToken {
     private static final String JWT_LOCAL_SECRET = "4z6B8EbGdKgNjQnTqVsYv2x5A7C9FcHeKhPkRnUr";
     private static final String TOKEN_ISSUER = "sherlog-api";
     private static final String TOKEN_AUDIENCE = "sherlog-app";
-    // TOKEN_EXPIRATION_TIME calculado em milisegundos, definido para 10 segundos
-    private static final int TOKEN_EXPIRATION_TIME = 1000 * 60 * 60;
+    // TOKEN_EXPIRATION_TIME calculado em milisegundos, definido para 2 horas
+    private static final int TOKEN_EXPIRATION_TIME = 1000 * 60 * 60 * 2;
     private static final String TOKEN_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer";
 

@@ -3,6 +3,7 @@ package br.com.codenation.errorcenter.controller;
 
 import br.com.codenation.errorcenter.dtos.LogRequestDTO;
 import br.com.codenation.errorcenter.models.Log;
+import br.com.codenation.errorcenter.repository.UserRepository;
 import br.com.codenation.errorcenter.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/logs")
+@RequestMapping("/log")
 public class LogController {
     @Autowired
     private LogService logService;
@@ -34,12 +34,12 @@ public class LogController {
     @PostMapping
     public ResponseEntity<?> addNewLog(HttpServletRequest request, @RequestBody Log log) throws Exception {
         Log newLog = logService.saveNewLog(log);
-        return ResponseEntity.ok(newLog);
-}
+        return ResponseEntity.ok("Log inserido com sucesso!");
+    }
 
     @PatchMapping("/status")
     public ResponseEntity<?> changeStatus(@RequestBody List <LogRequestDTO> log) throws Exception { 
         logService.update(log);
         return new ResponseEntity<>(HttpStatus.OK);
-}
+    }
 }

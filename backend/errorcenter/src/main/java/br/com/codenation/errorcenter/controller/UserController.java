@@ -1,16 +1,11 @@
 package br.com.codenation.errorcenter.controller;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import br.com.codenation.errorcenter.dtos.LoggedUserDto;
-import br.com.codenation.errorcenter.dtos.UserLoginRequestBody;
+import br.com.codenation.errorcenter.dtos.UserLoginRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +28,9 @@ public class UserController {
 		userService.save(user);
 		return ResponseEntity.ok(user);
 	}
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserLoginRequestBody body, HttpServletResponse response) {
+	public ResponseEntity<?> login(@RequestBody UserLoginRequestDto body, HttpServletResponse response) {
 		try {
 			String email = body.email;
 			String password = body.password;

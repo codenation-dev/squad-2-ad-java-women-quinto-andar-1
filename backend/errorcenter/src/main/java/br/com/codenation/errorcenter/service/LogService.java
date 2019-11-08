@@ -22,6 +22,7 @@ public class LogService {
     }
 
     public Log saveNewLog(Log log) {
+        // TODO fazer as verificações para prever erros ao salvar o log
         return logRepository.save(log);
     }
 
