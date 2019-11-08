@@ -1,7 +1,5 @@
 package br.com.codenation.errorcenter.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import java.io.Serializable;
 import java.util.List;
 

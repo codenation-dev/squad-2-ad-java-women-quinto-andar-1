@@ -1,7 +1,6 @@
 package br.com.codenation.errorcenter.models;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;

@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 public class LogController {
     @Autowired
     private LogService logService;
-
-    @Autowired
-    private UserRepository userRepository;
   
     @GetMapping
     public ResponseEntity<?> getLogs(HttpServletRequest request) throws Exception {
