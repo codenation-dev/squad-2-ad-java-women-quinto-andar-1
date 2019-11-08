@@ -30,10 +30,6 @@ public class Log implements Serializable{
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long id;
 
-	@JsonProperty("user")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "user", scope = User.class)
-	@JsonIdentityReference(alwaysAsId = true)
-	@JsonBackReference("teste")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

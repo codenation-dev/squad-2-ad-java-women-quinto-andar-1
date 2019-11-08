@@ -28,7 +28,7 @@ public class UserController {
 		userService.save(user);
 		return ResponseEntity.ok(user);
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody UserLoginRequestDto body, HttpServletResponse response) {
 		try {

@@ -22,7 +22,6 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@JsonManagedReference("teste")
 	private long id;
 	
 	@Column(nullable = false)
