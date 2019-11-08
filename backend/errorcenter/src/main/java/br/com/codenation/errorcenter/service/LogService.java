@@ -1,6 +1,6 @@
 package br.com.codenation.errorcenter.service;
 
-import br.com.codenation.errorcenter.dtos.LogDTO;
+import br.com.codenation.errorcenter.dtos.LogRequestDTO;
 import br.com.codenation.errorcenter.models.Log;
 import br.com.codenation.errorcenter.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,11 @@ public class LogService {
         return logRepository.save(log);
     }
 
-	public void update(List <LogDTO> log) {
+	public void update(List <LogRequestDTO> log) {
 
-        for(LogDTO logs: log){
+        for(LogRequestDTO logs: log){
             logRepository.update(logs.id, logs.status);
         }
-	}
+    }
+    
 }

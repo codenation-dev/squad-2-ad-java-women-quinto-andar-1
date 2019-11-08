@@ -1,6 +1,7 @@
 package br.com.codenation.errorcenter.controller;
 
-import br.com.codenation.errorcenter.dtos.LogDTO;
+
+import br.com.codenation.errorcenter.dtos.LogRequestDTO;
 import br.com.codenation.errorcenter.models.Log;
 import br.com.codenation.errorcenter.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class LogController {
     }
 
     @GetMapping("/{id}")
-    public Optional<?> getLogById(@PathVariable("id") Long id) {
-        return logService.findById(id); 
+    public ResponseEntity<?> getLogById(@PathVariable("id") Long id) throws Exception{
+        return new ResponseEntity<>(logService.findById(id), HttpStatus.OK); 
     }
 
     @PostMapping
@@ -36,8 +37,8 @@ public class LogController {
         return ResponseEntity.ok(newLog);
 }
 
-    @PatchMapping("/change-status")
-    public ResponseEntity<?> changeStatus(@RequestBody List <LogDTO> log) throws Exception { 
+    @PatchMapping("/status")
+    public ResponseEntity<?> changeStatus(@RequestBody List <LogRequestDTO> log) throws Exception { 
         logService.update(log);
         return new ResponseEntity<>(HttpStatus.OK);
 }

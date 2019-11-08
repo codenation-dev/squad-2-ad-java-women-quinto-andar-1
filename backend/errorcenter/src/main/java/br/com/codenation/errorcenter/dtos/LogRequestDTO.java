@@ -1,10 +1,15 @@
 package br.com.codenation.errorcenter.dtos;
 
-public class LogDTO {
+public class LogRequestDTO {
     
     public long id;
     public String status;
 
+
+    public LogRequestDTO(long id, String status) {
+        this.id = id;
+        this.status = status;
+    }
 
 
     public long getId() {
@@ -18,6 +23,8 @@ public class LogDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 
     
 }

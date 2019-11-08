@@ -15,6 +15,11 @@ import br.com.codenation.errorcenter.models.Log;
 public interface LogRepository extends JpaRepository<Log, Long>{
 
 
+   // @Modifying
+   // @Transactional
+   // @Query(value = "UPDATE tb_logs SET status=:status WHERE id=:id", nativeQuery = true) 
+   // public void update(@Param("id") long id, @Param("status") String status);
+
    @Modifying
    @Transactional
    @Query(value = "UPDATE tb_logs SET status=:status WHERE id=:id", nativeQuery = true) 
