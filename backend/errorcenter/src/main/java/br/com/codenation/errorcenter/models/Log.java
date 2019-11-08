@@ -23,10 +23,10 @@ import javax.validation.constraints.Size;
 @Table(name="tbLogs")
 public class Log implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1l;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -56,9 +56,6 @@ public class Log implements Serializable{
 	@Column(nullable = false)
 	private Date eventDate;
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
 
 	public long getId() {
 		return id;
