@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ErrorCenterApplication",
+            "request": "launch",
+            "mainClass": "br.com.codenation.errorcenter.ErrorCenterApplication",
+            "projectName": "errorcenter"
+        }
+    ]
+}

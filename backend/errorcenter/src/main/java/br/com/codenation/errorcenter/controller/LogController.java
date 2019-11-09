@@ -40,6 +40,6 @@ public class LogController {
     @PatchMapping("/status")
     public ResponseEntity<?> changeStatus(@RequestBody LogRequestDTO logs) throws Exception { 
         logService.update(logs);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok("Status alterado!");
     }
 }
