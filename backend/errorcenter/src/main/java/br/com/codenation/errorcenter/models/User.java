@@ -20,7 +20,7 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
-	private long id;
+	private Long id;
 	
 	@Column(nullable = false)
 	private String name;
@@ -39,7 +39,7 @@ public class User implements Serializable{
 
 	public User() {}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
