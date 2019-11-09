@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 class LogDetail extends Component {  
-  componentDidMount = () => {
-    // TODO: substituir pela checkagem de token de autenticação na resposta da request à API;
-    const isAuthenticated = document.cookie.includes('userToken');
-    const { history } = this.props;
-
-    if (!isAuthenticated) {
-      history.replace('/login');
-    }
+  componentDidMount = async () => {
+    await axios.get('http://localhost:8080/logs/teste', {
+      headers: { Authorization: sessionStorage.getItem("authToken") },
+    })
+      .catch(e => {
+        console.log(e);
+        this.props.history.replace('/login');
+      });
   }
 
   render() {

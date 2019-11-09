@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Login.css';
 import LoginForm from '../../components/organisms/LoginForm/LoginForm';
 
@@ -12,28 +13,6 @@ class Login extends Component {
   // (detectar o Cookie no componentDidMount e, se houver, redirecionar para a página de logs)
 
   // TODO: criar método genérico base que faça requests para a API no BaseService
-  apiCall = (request) => {
-    // Temporary mock:
-    const { email, password } = request.params;
-
-    if (email === 'teste' && password === '1234') {
-      return {
-        statusCode: 200,
-        userName: 'Fulano',
-        token: '424242',
-      };
-    } else if (email === 'teste' && password !== '1234') {
-      return {
-        statusCode: 401,
-        message: 'Senha incorreta',
-      };
-    } else  {
-      return {
-        statusCode: 400,
-        message: 'Usuário não cadastrado',
-      };
-    }
-  }
 
   handleInputChange = (e) => {
     e.preventDefault();
@@ -52,30 +31,17 @@ class Login extends Component {
     try {
       this.validateFields(email, password);
 
-      // TODO: mover para o UserService
-      const apiResponse = await this.apiCall({
-        path: '/login',
-        method: 'POST',
-        params: {
-          email,
-          password,
-        }
-      });
-        
-      if (apiResponse.token) {
-        this.setCookie(apiResponse.token);
+      const body = {
+        email, 
+        password
+      };
+
+      const response = await axios.post('http://localhost:8080/user/login', body)        
+      sessionStorage.setItem("authToken", response.headers["authorization"]);
+
+      if (response.status === 200) {
         history.push('/logs');
-      } 
-  
-      if (apiResponse.statusCode === 401) {
-        alert('Senha incorreta!');
-        this.setState({ password: '' });
-      }
-  
-      if (apiResponse.statusCode === 400) {
-        alert('Usuário não cadastrado!');
-        this.resetFields();
-      }
+      }      
     } catch (e) {
       alert(e.message);
     }
@@ -101,17 +67,6 @@ class Login extends Component {
     if (!password) {
       throw new Error('Preencha a senha');
     }
-  }
-
-  // TODO: migrar a criação de cookies para o backend (mais seguro)
-  setCookie = (token) => {
-    const expirationDate = new Date();
-    const time = expirationDate.getTime();
-    // Cookie com 10s de tempo de expiração para testes
-    const expireTime = time + 1000*10;
-    expirationDate.setTime(expireTime);
-
-    document.cookie = `userToken=${token};expires=${expirationDate.toUTCString()}`
   }
 
   render() {
