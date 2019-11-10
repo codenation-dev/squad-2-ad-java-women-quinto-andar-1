@@ -17,7 +17,7 @@ public class LogService {
         return logRepository.findAll();
     }
 
-    public Optional<?> findById(long id) {
+    public Optional<?> findById(Long id) {
         return logRepository.findById(id);
     }
 
@@ -26,11 +26,10 @@ public class LogService {
         return logRepository.save(log);
     }
 
-	public void update(List <LogRequestDTO> log) {
+	public void update(LogRequestDTO logs) {
 
-        for(LogRequestDTO logs: log){
-            logRepository.update(logs.id, logs.status);
-        }
+        logRepository.update(logs.id, logs.status);
+        
     }
     
 }
