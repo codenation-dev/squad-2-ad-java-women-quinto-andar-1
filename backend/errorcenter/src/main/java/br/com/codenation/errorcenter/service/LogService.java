@@ -1,6 +1,6 @@
 package br.com.codenation.errorcenter.service;
 
-import br.com.codenation.errorcenter.dtos.LogRequestDTO;
+import br.com.codenation.errorcenter.dtos.ChangeLogStatusRequestDto;
 import br.com.codenation.errorcenter.models.Log;
 import br.com.codenation.errorcenter.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class LogService {
         return logRepository.findAll();
     }
 
-    public Optional<?> findById(long id) {
+    public Optional<?> findById(Long id) {
         return logRepository.findById(id);
     }
 
@@ -29,11 +29,10 @@ public class LogService {
         return logRepository.save(log);
     }
 
-	public void update(List <LogRequestDTO> log) {
+	public void update(ChangeLogStatusRequestDto logs) {
 
-        for(LogRequestDTO logs: log){
-            logRepository.update(logs.id, logs.status);
-        }
+        logRepository.update(logs.id, logs.status);
+        
     }
     
 }

@@ -1,18 +1,18 @@
 package br.com.codenation.errorcenter.dtos;
 
-public class LogRequestDTO {
-    
-    public long id;
+import java.util.List;
+
+public class ChangeLogStatusRequestDto {
+
+    public List<Long> id;
     public String status;
 
-
-    public LogRequestDTO(long id, String status) {
+    public ChangeLogStatusRequestDto(List<Long> id, String status) {
         this.id = id;
         this.status = status;
     }
 
-
-    public long getId() {
+    public List<Long> getId() {
         return id;
     }
 
@@ -24,7 +24,8 @@ public class LogRequestDTO {
         this.status = status;
     }
 
+	public void setId(List<Long> id) {
+		this.id = id;
+	}
 
-
-    
 }
