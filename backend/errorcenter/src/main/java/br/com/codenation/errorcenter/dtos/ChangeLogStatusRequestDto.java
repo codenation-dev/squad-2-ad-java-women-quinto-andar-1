@@ -2,12 +2,12 @@ package br.com.codenation.errorcenter.dtos;
 
 import java.util.List;
 
-public class LogRequestDTO {
+public class ChangeLogStatusRequestDto {
 
     public List<Long> id;
     public String status;
 
-    public LogRequestDTO(List<Long> id, String status) {
+    public ChangeLogStatusRequestDto(List<Long> id, String status) {
         this.id = id;
         this.status = status;
     }
