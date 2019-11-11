@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.codenation.errorcenter.models.User;
 import br.com.codenation.errorcenter.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserService{
 
 	@Autowired
@@ -22,7 +24,9 @@ public class UserService{
 
 
 	public Optional<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
+
+			return userRepository.findByEmail(email);	
+	
 	}
 
 	public void save(User user) {

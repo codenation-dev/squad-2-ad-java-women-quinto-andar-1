@@ -1,19 +1,24 @@
 package br.com.codenation.errorcenter.controller;
 
 
-import br.com.codenation.errorcenter.dtos.LogRequestDTO;
-import br.com.codenation.errorcenter.models.Log;
-import br.com.codenation.errorcenter.repository.UserRepository;
-import br.com.codenation.errorcenter.service.LogService;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
+import br.com.codenation.errorcenter.dtos.LogRequestDTO;
+import br.com.codenation.errorcenter.models.Log;
+import br.com.codenation.errorcenter.service.LogService;
 
 @RestController
 @RequestMapping("/log")
