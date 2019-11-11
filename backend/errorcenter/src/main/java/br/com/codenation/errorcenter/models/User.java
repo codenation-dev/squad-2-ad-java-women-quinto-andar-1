@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tbUser")
-public class Long implements Serializable{
+public class User implements Serializable{
 
 	private static final long serialVersionUID = 1l;
 	
@@ -37,7 +37,7 @@ public class Long implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Log> log;
 
-	public Long() {}
+	public User() {}
 
 	public long getId() {
 		return id;
