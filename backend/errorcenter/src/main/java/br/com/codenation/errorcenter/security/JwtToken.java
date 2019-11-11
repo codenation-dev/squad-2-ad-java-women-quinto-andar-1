@@ -20,7 +20,7 @@ public class JwtToken {
     // TOKEN_EXPIRATION_TIME calculado em milisegundos, definido para 2 horas
     private static final int ONE_HOUR = 60 * 60;
     private static final int MILLISECONDS = 1000;
-    private static final int TOKEN_EXPIRATION_TIME = MILLISECONDS * 10;
+    private static final int TOKEN_EXPIRATION_TIME = ONE_HOUR * 1000;
     private static final String TOKEN_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer";
 

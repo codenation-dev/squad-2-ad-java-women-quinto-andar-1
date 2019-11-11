@@ -31,5 +31,34 @@ public class LogService {
         logRepository.update(logs.id, logs.status);
         
     }
+	
+	  public Optional<Log> findByEnvironment(String environment, String search_filter, String value_filter) {
+	    	
+	    	if (search_filter.equals("LEVEL")) {
+	    		return logRepository.findByEnvironmentAndLevel(environment, value_filter);
+				
+			} else if (search_filter.equals("DESCRIPTION")){
+				return logRepository.findByEnvironmentAndDescription(environment, value_filter);
+				
+			} else if (search_filter.equals("ORIGIN")){
+				return logRepository.findByEnvironmentAndOrigin(environment, value_filter);
+			}
+	    	
+	        return Optional.empty();
+	    }  
+	    
+	    
+	    public Optional<Log> findByEnvironmentOrderBy(String environment, String search_filter) {
+	    	
+	    	if (search_filter.equals("LEVEL")) { /*TODO Ver se a query tá funcionando direito*/
+	    		return logRepository.findByEnvironmentOrderByLevel(environment);
+				
+			} else if (search_filter.equals("FREQUENCY")){ /*TODO Ajeitar query*/
+				return logRepository.findByEnvironmentOrderByFrequency(environment);
+				
+			}  
+	    	
+	        return logRepository.findByEnvironmentOrderByFrequency("PROD");
+	    }
     
 }

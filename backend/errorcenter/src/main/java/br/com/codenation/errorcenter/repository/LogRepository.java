@@ -2,6 +2,7 @@ package br.com.codenation.errorcenter.repository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,9 +18,28 @@ import br.com.codenation.errorcenter.models.Log;
 @Repository
 public interface LogRepository extends JpaRepository<Log, Long>{
 
-   @Modifying
-   @Transactional
-   @Query(value = "UPDATE tb_logs SET status=:status WHERE id in (:ids)", nativeQuery = true) 
-   public void update(@Param("ids") List<Long> id, @Param("status") String status);
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE tb_logs SET status=:status WHERE id in (:ids)", nativeQuery = true) 
+	public void update(@Param("ids") List<Long> id, @Param("status") String status);
+
+	@Query(value = "SELECT log FROM tb_logs log WHERE log.environment=:environment AND log.level=:level AND status='ACTIVE'", nativeQuery = true) 
+	public Optional<Log> findByEnvironmentAndLevel(@Param("environment") String environment, @Param("level") String level);
+
+
+	@Query(value = "SELECT log FROM tb_logs log WHERE log.environment=:environment AND log.description LIKE %:description% AND status='ACTIVE'", nativeQuery = true) 
+	public Optional<Log> findByEnvironmentAndDescription(@Param("environment") String environment, @Param("description") String description);
+
+
+	@Query(value = "SELECT log FROM tb_logs log WHERE log.environment=:environment AND log.origin=:origin AND status='ACTIVE'", nativeQuery = true) 
+	public Optional<Log> findByEnvironmentAndOrigin(@Param("environment") String environment, @Param("origin") String origin);
+
+
+	@Query(value = "SELECT log FROM tb_logs log WHERE log.environment=:environment AND status='ACTIVE' ORDER BY log.level ASC", nativeQuery = true) 
+	public Optional<Log> findByEnvironmentOrderByLevel(@Param("environment") String environment);
+
+
+	@Query(value = "SELECT COUNT(title) AS Frequency, title, LEVEL FROM tbLog WHERE environment=:environment AND status='ACTIVE' GROUP BY title, LEVEL ORDER BY 1 DESC", nativeQuery = true) 
+	public Optional<Log> findByEnvironmentOrderByFrequency(@Param("environment") String environment);
 
 }
