@@ -1,39 +1,45 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import Loader from '../../components/molecules/Loader/Loader';
+import { RequestService } from '../../services/RequestService';
 
 class LogsList extends Component {
-  componentDidMount = () => {
-    // TODO: substituir pela checkagem de token de autenticação na resposta da request à API;
-    const isAuthenticated = document.cookie.includes('userToken');
-    const { history } = this.props;
+  state = {
+    isAuthenticated: false
+  }
 
-    if (!isAuthenticated) {
-      history.replace('/login');
+  componentDidMount = async (props) => {
+    try {
+      const response = await RequestService.listLogs();
+  
+      // TODO: gravar a resposta no state
+      this.setState({
+        isAuthenticated: true,
+      })
+    } catch (e) {
+      console.log(e)
     }
   }
 
   render() {
-    return (
-      <>
-        <div>
-          <p>Olá!</p>
-        </div>
-        <div>
-          <p>Página de Logs</p>
-          <Link to="/logs/001">
-            <p>Primeiro Log</p>
-          </Link>
-          <Link to="/logs/002">
-            <p>Segundo Log</p>
-          </Link>
-        </div>
-        <div>
-          <Link to="/login">
-            <button>Sair</button>
-          </Link>
-        </div>
-      </>
-    );
+    return this.state.isAuthenticated
+      ? (
+        <>
+          <div>
+            <p>Olá!</p>
+          </div>
+          <div>
+            <p>Página de Logs</p>
+            <Link to="/logs/1">
+              <p>Primeiro Log</p>
+            </Link>
+            <Link to="/logs/2">
+              <p>Segundo Log</p>
+            </Link>
+          </div>
+        </>
+      )
+    : <Loader />
   }
 }
 
