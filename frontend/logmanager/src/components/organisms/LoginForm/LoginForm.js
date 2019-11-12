@@ -26,11 +26,9 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
       <Button>
         Logar
       </Button>
-      <Link to='/sign-up'>
-        <Button>
-          Cadastrar
-        </Button>
-      </Link>
+      <p className="bottom-link"> Nov@ por aqui?
+      <Link to='/sign-up'>Cadastre-se</Link>
+      </p>
     </Form>
   </Card>
 );

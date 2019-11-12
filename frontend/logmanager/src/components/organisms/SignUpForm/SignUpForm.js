@@ -33,11 +33,9 @@ const SignUpForm = ({onSubmit, onChange, ...props}) => (
       <Button>
         Cadastrar
       </Button>
-      <Link to='/login'>
-        <Button>
-          Voltar
-        </Button>
-      </Link>
+      <p className="bottom-link-back"> 
+      <Link to='/login'>Voltar</Link>
+      </p>
     </Form>
   </Card>
 );
