@@ -2,7 +2,7 @@ import React from 'react';
 import './Input.css';
 
 const Input = ({ type, name, onChange, value, ...props }) => (
-  <input 
+  <input className="form-control"
     type={type} 
     name={name} 
     onChange={onChange} 

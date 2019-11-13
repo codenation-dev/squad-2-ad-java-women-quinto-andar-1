@@ -64,14 +64,12 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
         <LoginForm
           onSubmit={this.onSubmit}
           onChange={this.handleInputChange}
           email={this.state.email}
           password={this.state.password}
         />
-      </div>
     );
   }
 }
