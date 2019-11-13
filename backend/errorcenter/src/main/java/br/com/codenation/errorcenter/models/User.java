@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tbUser")
 public class User implements Serializable{
@@ -35,6 +38,7 @@ public class User implements Serializable{
 	private String tokenAccess;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@JsonIgnore
 	private List<Log> log;
 
 	public User() {}
@@ -42,7 +46,7 @@ public class User implements Serializable{
 	public Long getId() {
 		return id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}

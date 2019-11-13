@@ -1,15 +1,17 @@
 package br.com.codenation.errorcenter.security;
 
-import br.com.codenation.errorcenter.repository.UserRepository;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import br.com.codenation.errorcenter.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtToken {
@@ -51,7 +53,7 @@ public class JwtToken {
         return null;
     }
 
-    private static Authentication validateJwtToken(String userAuthToken) throws ExpiredJwtException {
+    private static Authentication validateJwtToken(String userAuthToken) {
         String userToken = Jwts.parser()
                 .setSigningKey(Keys.hmacShaKeyFor(JWT_LOCAL_SECRET.getBytes()))
                 .parseClaimsJws(userAuthToken.replace(TOKEN_PREFIX, ""))
