@@ -5,6 +5,7 @@ import Card from '../../atoms/Card/Card';
 import Form from '../../atoms/Form/Form';
 import Field from '../../molecules/Field/Field';
 import Button from '../../atoms/Button/Button';
+import FormLink from '../../atoms/FormLink/FormLink';
 
 const LoginForm = ({onSubmit, onChange, ...props}) => (
 	<Card>
@@ -26,9 +27,9 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
       <Button>
         Logar
       </Button>
-      <p className="bottom-link"> Nov@ por aqui?
+      <FormLink>Nov@ por aqui?
       <Link to='/sign-up'>Cadastre-se</Link>
-      </p>
+      </FormLink>
     </Form>
   </Card>
 );
