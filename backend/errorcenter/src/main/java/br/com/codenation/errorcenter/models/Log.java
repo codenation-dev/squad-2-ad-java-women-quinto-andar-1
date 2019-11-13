@@ -1,8 +1,5 @@
 package br.com.codenation.errorcenter.models;
 
-import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="tbLogs")
 public class Log implements Serializable{
@@ -29,6 +30,7 @@ public class Log implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	//@OneToOne(fetch = FetchType.LAZY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
