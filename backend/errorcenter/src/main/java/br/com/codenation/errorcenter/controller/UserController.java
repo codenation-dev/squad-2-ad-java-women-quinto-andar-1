@@ -1,7 +1,7 @@
 package br.com.codenation.errorcenter.controller;
 
-import br.com.codenation.errorcenter.dtos.LoggedUserDto;
-import br.com.codenation.errorcenter.dtos.UserLoginRequestDto;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.codenation.errorcenter.dtos.LoggedUserDto;
+import br.com.codenation.errorcenter.dtos.UserLoginRequestDto;
 import br.com.codenation.errorcenter.models.User;
 import br.com.codenation.errorcenter.service.UserService;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/user")

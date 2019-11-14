@@ -20,6 +20,7 @@ import br.com.codenation.errorcenter.dtos.ChangeLogStatusRequestDto;
 import br.com.codenation.errorcenter.models.Log;
 import br.com.codenation.errorcenter.service.LogService;
 
+
 @RestController
 @RequestMapping("/log")
 public class LogController {

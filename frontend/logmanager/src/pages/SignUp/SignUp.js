@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignUpForm from '../../components/organisms/SignUpForm/SignUpForm';
 import { RequestService } from '../../services/RequestService';
+import './SignUp.css';
 
 class SignUp extends Component {
   state = {
@@ -71,14 +72,12 @@ class SignUp extends Component {
 
   render() {
     return (
-      <div>
         <SignUpForm
           onSubmit={this.onSubmit}
           onChange={this.handleInputChange}
           email={this.state.email}
           password={this.state.password}
         />
-      </div>
     );
   }
 }
