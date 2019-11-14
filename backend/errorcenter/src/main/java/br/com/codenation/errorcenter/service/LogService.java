@@ -35,7 +35,7 @@ public class LogService {
         
     }
 	
-	  public Optional<Log> findByEnvironment(String environment, String search_filter, String value_filter) {
+	  public List<Log> findByEnvironment(String environment, String search_filter, String value_filter) {
 	    	
 	    	if (search_filter.equals("LEVEL")) {
 	    		return logRepository.findByEnvironmentAndLevel(environment, value_filter);
@@ -47,11 +47,11 @@ public class LogService {
 				return logRepository.findByEnvironmentAndOrigin(environment, value_filter);
 			}
 	    	
-	        return Optional.empty();
+	        return null;
 	    }  
 	    
 	    
-	    public Optional<Log> findByEnvironmentOrderBy(String environment, String search_filter) {
+	    public List<Log> findByEnvironmentOrderBy(String environment, String search_filter) {
 	    	
 	    	if (search_filter.equals("LEVEL")) { /*TODO Ver se a query tá funcionando direito*/
 	    		return logRepository.findByEnvironmentOrderByLevel(environment);

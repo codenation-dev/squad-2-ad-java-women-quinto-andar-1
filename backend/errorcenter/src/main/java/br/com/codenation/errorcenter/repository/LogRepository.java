@@ -2,7 +2,6 @@ package br.com.codenation.errorcenter.repository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -28,14 +27,14 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "WHERE environment=:environment "
 			+ "AND level=:level "
 			+ "AND status='ACTIVE'", nativeQuery = true) 
-	public Optional<Log> findByEnvironmentAndLevel(@Param("environment") String environment, @Param("level") String level);
+	public List<Log> findByEnvironmentAndLevel(@Param("environment") String environment, @Param("level") String level);
 
 
 	@Query(value = "SELECT id, title, description, environment, event_date, level, origin, status, user_id "
 			+ "FROM tb_logs WHERE environment=:environment "
 			+ "AND description LIKE %:description% "
 			+ "AND status='ACTIVE'", nativeQuery = true) 
-	public Optional<Log> findByEnvironmentAndDescription(@Param("environment") String environment, @Param("description") String description);
+	public List<Log> findByEnvironmentAndDescription(@Param("environment") String environment, @Param("description") String description);
 
 
 	@Query(value = "SELECT id, title, description, environment, event_date, level, origin, status, user_id "
@@ -43,7 +42,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "WHERE environment=:environment "
 			+ "AND origin=:origin "
 			+ "AND status='ACTIVE'", nativeQuery = true) 
-	public Optional<Log> findByEnvironmentAndOrigin(@Param("environment") String environment, @Param("origin") String origin);
+	public List<Log> findByEnvironmentAndOrigin(@Param("environment") String environment, @Param("origin") String origin);
 
 
 	@Query(value = "SELECT id, title, description, environment, event_date, level, origin, status, user_id "
@@ -51,15 +50,15 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "WHERE environment=:environment "
 			+ "AND status='ACTIVE' "
 			+ "ORDER BY level ASC", nativeQuery = true) 
-	public Optional<Log> findByEnvironmentOrderByLevel(@Param("environment") String environment);
+	public List<Log> findByEnvironmentOrderByLevel(@Param("environment") String environment);
 
 
 	@Query(value = "SELECT COUNT(title) AS Frequency, title, level "
 			+ "FROM tb_logs "
 			+ "WHERE environment=:environment "
 			+ "AND status='ACTIVE' "
-			+ "GROUP BY title, level "
-			+ "ORDER BY 1 DESC;", nativeQuery = true) 
-	public Optional<Log> findByEnvironmentOrderByFrequency(@Param("environment") String environment);
+			+ "GROUP BY title, level   "
+			+ "ORDER BY 1 DESC", nativeQuery = true) 
+	public List<Log> findByEnvironmentOrderByFrequency(@Param("environment") String environment);
 
 }

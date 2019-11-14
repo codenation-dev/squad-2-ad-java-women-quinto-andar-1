@@ -1,7 +1,7 @@
 package br.com.codenation.errorcenter.controller;
 
 
-import java.util.Optional;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,13 +51,13 @@ public class LogController {
     
     @GetMapping("/{environment}/{search-filter}/{value-filter}")
     public ResponseEntity<?> findByEnvironment(HttpServletRequest request, @PathVariable("environment") String environment, @PathVariable("search-filter") String search_filter, @PathVariable("value-filter") String value_filter) throws Exception {
-        Optional<Log> logs = logService.findByEnvironment(environment, search_filter, value_filter);
+    	List<Log> logs = logService.findByEnvironment(environment, search_filter, value_filter);
         return ResponseEntity.ok(logs);
     }
     
     @GetMapping("/{environment}/{order-by}")
     public ResponseEntity<?> findByEnvironmentOrderBy(HttpServletRequest request, @PathVariable("environment") String environment, @PathVariable("order-by") String order_by) throws Exception {
-        Optional<Log> logs = logService.findByEnvironmentOrderBy(environment, order_by);
+    	List<Log> logs = logService.findByEnvironmentOrderBy(environment, order_by);
         return ResponseEntity.ok(logs);
     }  
 }
