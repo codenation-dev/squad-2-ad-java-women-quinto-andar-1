@@ -5,18 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import br.com.codenation.errorcenter.dtos.responses.projections.LogWithFrequencyResponseDTO;
+import br.com.codenation.errorcenter.dtos.responses.projections.LogResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.codenation.errorcenter.dtos.ChangeLogStatusRequestDto;
+import br.com.codenation.errorcenter.dtos.requests.ChangeLogStatusRequestDTO;
 import br.com.codenation.errorcenter.models.Log;
 import br.com.codenation.errorcenter.service.LogService;
 
@@ -27,14 +23,10 @@ public class LogController {
     @Autowired
     private LogService logService;
 
+    // Exemplo: {url-base}/log?id=9
     @GetMapping
-    public ResponseEntity<?> getLogs() throws Exception {
-        return new ResponseEntity<>(logService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getLogById(@PathVariable("id") Long id) throws Exception{
-        return new ResponseEntity<>(logService.findById(id), HttpStatus.OK); 
+    public ResponseEntity<?> getLogById(@RequestParam("id") Long id) throws Exception {
+        return new ResponseEntity<>(logService.getLogById(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -44,20 +36,45 @@ public class LogController {
     }
 
     @PatchMapping("/status")
-    public ResponseEntity<?> changeStatus(@RequestBody ChangeLogStatusRequestDto logs) throws Exception {
+    public ResponseEntity<?> changeStatus(@RequestBody ChangeLogStatusRequestDTO logs) throws Exception {
         logService.update(logs);
         return ResponseEntity.ok("Status alterado!");
     }
-    
-    @GetMapping("/{environment}/{search-filter}/{value-filter}")
-    public ResponseEntity<?> findByEnvironment(HttpServletRequest request, @PathVariable("environment") String environment, @PathVariable("search-filter") String search_filter, @PathVariable("value-filter") String value_filter) throws Exception {
-    	List<Log> logs = logService.findByEnvironment(environment, search_filter, value_filter);
+
+    // Exemplo: {url-base}/log/prod
+    @GetMapping("/{environment}")
+    public ResponseEntity<?> getLogsByEnvironment(HttpServletRequest request, @PathVariable("environment") String environment) {
+        String upperCaseEnvironment = environment.toUpperCase();
+        List<LogResponseDTO> logs = logService.findByEnvironmentAndOrderByDate(upperCaseEnvironment);
         return ResponseEntity.ok(logs);
     }
-    
-    @GetMapping("/{environment}/{order-by}")
-    public ResponseEntity<?> findByEnvironmentOrderBy(HttpServletRequest request, @PathVariable("environment") String environment, @PathVariable("order-by") String order_by) throws Exception {
-    	List<Log> logs = logService.findByEnvironmentOrderBy(environment, order_by);
+
+    // Exemplo com origin: {url-base}/log/prod?filter=origin&value=site
+    // Exemplo com level: {url-base}/log/prod?filter=level&value=error
+    // Exemplo com description: {url-base}/log/prod?filter=description&value=banco
+    @GetMapping(value = "/{environment}", params = {"filter", "value"})
+    public ResponseEntity<?> getLogsByEnvironmentAndSearchQuery(HttpServletRequest request,
+                                                                @PathVariable("environment") String environment,
+                                                                @RequestParam(value = "filter", required = true) String filter,
+                                                                @RequestParam(value = "value", required = true) String value) throws Exception {
+        String upperCaseEnvironment = environment.toUpperCase();
+        List<LogResponseDTO> logs = logService.findByEnvironment(upperCaseEnvironment, filter, value);
         return ResponseEntity.ok(logs);
-    }  
+    }
+
+    // Exemplo com level: {url-base}/log/prod?order=level
+    // Exemplo com frequency: {url-base}/log/prod?order=frequency
+    @GetMapping(value = "/{environment}", params = "order")
+    public ResponseEntity<?> getLogsByEnvironmentWithOrderBy(HttpServletRequest request,
+                                                             @PathVariable("environment") String environment,
+                                                             @RequestParam(value = "order", required = true) String order) throws Exception {
+        String upperCaseEnvironment = environment.toUpperCase();
+        if (order.equals("frequency")) {
+            List<LogWithFrequencyResponseDTO> logs = logService.findByEnvironmentAndOrderByFrequency(upperCaseEnvironment);
+            return ResponseEntity.ok(logs);
+        }
+
+        List<LogResponseDTO> logs = logService.findByEnvironmentAndOrderByLevel(upperCaseEnvironment);
+        return ResponseEntity.ok(logs);
+    }
 }
