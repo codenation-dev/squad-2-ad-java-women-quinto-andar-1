@@ -7,9 +7,7 @@ import LogDetail from './pages/LogDetail/LogDetail';
 import NotFound from './pages/NotFound/NotFound';
 import Menu from './components/organisms/Menu/Menu';
 
-const Routes = (props) => {
-  console.log('props', props)
-  return (
+const Routes = (props) => (
   <BrowserRouter>
     <Menu onLogOut={props.onLogOut}>
       <Switch>
@@ -22,6 +20,6 @@ const Routes = (props) => {
       </Switch>
     </Menu>
   </BrowserRouter>
-)};
+);
 
 export default Routes;

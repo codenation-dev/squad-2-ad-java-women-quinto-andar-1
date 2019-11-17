@@ -7,7 +7,13 @@ export class RequestService extends BaseService {
 
   static signUp = async (body) => this.post(`${this.BASE_URL}/user`, body)
 
-  static listLogs = async () => this.get(`${this.BASE_URL}/log`)
+  static getLogsByEnvironment = async (env) => this.get(`${this.BASE_URL}/log/${env}`)
 
-  static getLogById = async (id) => this.get(`${this.BASE_URL}/${id}`)
+  static searchLogs = async (env, filter, query) => this.get(`${this.BASE_URL}/log/${env}?filter=${filter}&value=${query}`)
+
+  static orderLogs = async (env, order) => this.get(`${this.BASE_URL}/log/${env}?order=${order}`)
+
+  static changeStatus = async (body) => this.patch(`${this.BASE_URL}/log/status`, body)
+
+  static getLogById = async (id) => this.get(`${this.BASE_URL}/log?id=${id}`)
 }

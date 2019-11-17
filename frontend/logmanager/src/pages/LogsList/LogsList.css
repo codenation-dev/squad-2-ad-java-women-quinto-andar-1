@@ -1,0 +1,15 @@
+.d-flex {
+  display: flex;
+}
+
+.j-around {
+  justify-content: space-around;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.fd-col {
+  flex-direction: column;
+}
