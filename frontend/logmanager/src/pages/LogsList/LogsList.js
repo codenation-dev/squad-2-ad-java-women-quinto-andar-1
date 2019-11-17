@@ -17,15 +17,18 @@ class LogsList extends Component {
   componentDidMount = async (props) => {
     try {
       const response = await RequestService.getLogsByEnvironment('dev');
-      const logs = response.data && response.data.map(log => ({
-        ...log,
-        isChecked: false
-      }))
-  
-      this.setState({
-        isLoading: false,
-        logs
-      });
+
+      if (response.data) {
+        const logs = response.data.map(log => ({
+          ...log,
+          isChecked: false
+        }))
+    
+        this.setState({
+          isLoading: false,
+          logs
+        });
+      }
     } catch (e) {
       console.log(e)
       this.props.history.replace('/login');
