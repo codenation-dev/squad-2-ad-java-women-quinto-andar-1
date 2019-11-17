@@ -23,7 +23,7 @@ class LogDetail extends Component {
         log: response.data
       })
     } catch (e) {
-      this.props.history.replace('/login')
+      // this.props.history.replace('/login')
     }
   }
 

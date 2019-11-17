@@ -31,7 +31,7 @@ class LogsList extends Component {
       }
     } catch (e) {
       console.log(e)
-      this.props.history.replace('/login');
+      // this.props.history.replace('/login');
     }
   }
 
