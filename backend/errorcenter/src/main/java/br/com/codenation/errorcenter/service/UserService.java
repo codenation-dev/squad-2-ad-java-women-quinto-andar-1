@@ -3,6 +3,7 @@ package br.com.codenation.errorcenter.service;
 import java.util.Optional;
 import java.util.UUID;
 
+import br.com.codenation.errorcenter.dtos.responses.LoggedUserResponseDTO;
 import br.com.codenation.errorcenter.security.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -49,7 +50,7 @@ public class UserService{
 		}
 	}
 
-	public Pair<String, User> authenticateUser(String email, String rawPassword) throws Exception {
+	public Pair<String, LoggedUserResponseDTO> authenticateUser(String email, String rawPassword) throws Exception {
 		Optional<User> user = userRepository.findByEmail(email);
 
 		if (user.isPresent()) {
@@ -57,7 +58,14 @@ public class UserService{
 				String userToken = user.get().getTokenAccess();
 				String jwtToken = JwtToken.addJwtToken(userToken);
 
-				return Pair.of(jwtToken, user.get());
+				Long id = user.get().getId();
+				String name = user.get().getName();
+				String userEmail = user.get().getEmail();
+				String tokenAccess = user.get().getTokenAccess();
+
+				LoggedUserResponseDTO formattedUser = new LoggedUserResponseDTO(id, name, userEmail, tokenAccess);
+
+				return Pair.of(jwtToken, formattedUser);
 			}
 
 			// TODO formatar os erros pra retornar o status também

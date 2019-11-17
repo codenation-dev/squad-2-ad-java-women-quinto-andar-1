@@ -1,12 +1,12 @@
-package br.com.codenation.errorcenter.dtos;
+package br.com.codenation.errorcenter.dtos.responses;
 
-public class LoggedUserDto {
+public class LoggedUserResponseDTO {
     private Long id;
     private String name;
     private String email;
     private String tokenAccess;
 
-    public LoggedUserDto(Long id, String name, String email, String tokenAccess) {
+    public LoggedUserResponseDTO(Long id, String name, String email, String tokenAccess) {
         this.id = id;
         this.name = name;
         this.email = email;
