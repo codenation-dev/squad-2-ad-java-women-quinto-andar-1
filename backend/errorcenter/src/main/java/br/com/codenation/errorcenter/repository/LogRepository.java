@@ -68,8 +68,8 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "CASE WHEN level='FATAL' THEN 0 "
 			+ "WHEN level='ERROR' THEN 1 "
 			+ "WHEN level='WARN' THEN 2 "
-			+ "WHEN level='DEBUG' THEN 3 "
-			+ "WHEN level='INFO' THEN 4 "
+			+ "WHEN level='INFO' THEN 3 "
+			+ "WHEN level='DEBUG' THEN 4 "
 			+ "END ASC, "
 			+ "event_date DESC", nativeQuery = true)
 	public List<LogResponseDTO> findByEnvironmentAndOrderByLevel(@Param("environment") String environment);
