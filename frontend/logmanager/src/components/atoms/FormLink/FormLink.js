@@ -1,9 +1,13 @@
 import React from 'react';
 import './FormLink.css';
+import { Link } from "react-router-dom";
 
-const FormLink = props => (
-  <p className="bottom-link">
-    {props.children}
+
+const FormLink = ({ isDisabled, route, ...props }) => (
+  <p className={isDisabled ? "notClickable" : undefined}>
+    <Link to={route}>
+      {props.children}
+    </Link>
   </p>
 );
 

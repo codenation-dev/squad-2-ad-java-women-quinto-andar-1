@@ -1,8 +1,8 @@
 import React from 'react';
 import './Button.css';
 
-const Button = ({ children, ...props }) => (
-	<button className="btn" {...props}>
+const Button = ({ disabled, children, ...props }) => (
+	<button className={disabled ? "btn disabled" : "btn"} {...props}>
 		{children}
 	</button>
 );

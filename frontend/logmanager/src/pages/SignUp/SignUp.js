@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import SignUpForm from '../../components/organisms/SignUpForm/SignUpForm';
 import { RequestService } from '../../services/RequestService';
 import './SignUp.css';
+import Loader from '../../components/molecules/Loader/Loader';
 
 class SignUp extends Component {
   state = {
     name: '',
     email: '',
     password: '',
+    isLoading: false,
   }
 
   handleInputChange = (e) => {
@@ -18,14 +20,32 @@ class SignUp extends Component {
     });
   }
 
+  redirectToMainPage = () => {
+    const authToken = sessionStorage.getItem("authToken");
+    const { history } = this.props;
+
+    if (authToken) {
+      this.setState({
+        isLoading: false
+      })
+
+      history.push('/logs');
+    } else {
+      this.redirectToMainPage();
+    }
+  }
+
   onSubmit = async (e) => {
     e.preventDefault();
 
     const { name, email, password } = this.state;
-    const { history } = this.props;
 
     try {
       this.validateFields(name, email, password);
+
+      this.setState({
+        isLoading: true
+      })
 
       const body = {
         name,
@@ -36,10 +56,13 @@ class SignUp extends Component {
       const response = await RequestService.signUp(body);
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
-      this.resetFields();
-      history.push('/logs');
+      this.redirectToMainPage()
     } catch (e) {
-      alert(e.message);
+      console.log(e);
+
+      this.setState({
+        isLoading: false
+      })
     }
   }
 
@@ -72,12 +95,16 @@ class SignUp extends Component {
 
   render() {
     return (
+      <>
+        {this.state.isLoading && <Loader />}
         <SignUpForm
           onSubmit={this.onSubmit}
           onChange={this.handleInputChange}
           email={this.state.email}
           password={this.state.password}
+          isLoading={this.state.isLoading}
         />
+      </>
     );
   }
 }

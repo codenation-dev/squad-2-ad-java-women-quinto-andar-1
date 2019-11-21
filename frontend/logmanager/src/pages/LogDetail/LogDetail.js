@@ -16,7 +16,6 @@ class LogDetail extends Component {
       const logId = this.props.match.params.id
 
       const response = await RequestService.getLogById(logId);
-      console.log(response)
       
       this.setState({
         isAuthenticated: true,

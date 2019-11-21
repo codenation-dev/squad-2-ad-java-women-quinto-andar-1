@@ -30,7 +30,7 @@ class LogsList extends Component {
         });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       // this.props.history.replace('/login');
     }
   }
@@ -125,7 +125,13 @@ class LogsList extends Component {
     }
 
     await RequestService.changeStatus(body)
-    await RequestService.getLogsByEnvironment(this.state.environment)
+    const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
+
+    if (updatedLogs.data) {
+      this.setState({
+        logs: updatedLogs.data
+      })
+    }
   }
 
   renderSubMenu = () => (
@@ -197,7 +203,7 @@ class LogsList extends Component {
               </Link>
             </div>
           </div>
-        ))
+        ))  
       }
     </div>
   )

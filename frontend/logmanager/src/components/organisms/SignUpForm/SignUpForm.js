@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import './SignUpForm.css';
 import Card from '../../atoms/Card/Card';
 import Form from '../../atoms/Form/Form';
@@ -7,7 +6,7 @@ import Field from '../../molecules/Field/Field';
 import Button from '../../atoms/Button/Button';
 import FormLink from '../../atoms/FormLink/FormLink';
 
-const SignUpForm = ({onSubmit, onChange, ...props}) => (
+const SignUpForm = ({onSubmit, onChange, isLoading, ...props}) => (
 	<Card>
     <Form onSubmit={onSubmit}>
       <Field
@@ -16,6 +15,7 @@ const SignUpForm = ({onSubmit, onChange, ...props}) => (
         type="text"
         onChange={onChange}
         value={props.name}
+        disabled={isLoading}
       />
       <Field
         label="E-mail"
@@ -23,6 +23,7 @@ const SignUpForm = ({onSubmit, onChange, ...props}) => (
         type="text"
         onChange={onChange}
         value={props.email}
+        disabled={isLoading}
       />
       <Field
         label="Senha"
@@ -30,13 +31,16 @@ const SignUpForm = ({onSubmit, onChange, ...props}) => (
         type="password"
         onChange={onChange}
         value={props.password}
+        disabled={isLoading}
       />
-      <Button>
+      <Button disabled={isLoading}>
         Cadastrar
       </Button>
-      <FormLink> 
-      <Link to='/login'>Voltar</Link>
-      </FormLink> 
+      <div className='bottom-link-wrapper'>
+        <FormLink route='/login' isDisabled={isLoading}>
+          Voltar
+        </FormLink>
+      </div>
     </Form>
   </Card>
 );
