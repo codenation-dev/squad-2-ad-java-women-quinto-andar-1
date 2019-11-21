@@ -1,4 +1,4 @@
-import './Menu.css';
+import './Menu.scss';
 import React, { Component } from 'react';
 import Button from '../../atoms/Button/Button';
 import { withRouter } from 'react-router-dom';
@@ -8,17 +8,18 @@ class Menu extends Component {
     sessionStorage.removeItem("authToken");
     this.props.history.push('/')
   }
+  
   render() {
     const { pathname } = this.props.location
     const hiddenMenuPages = ['/', '/login', '/sign-up']
 
     return !hiddenMenuPages.includes(pathname)
       ? <>
-          <header>
-            <Button onClick={this.logOut}>
+          <div className='menu' ref='menu'>
+            <Button className='--logout' onClick={this.logOut}>
               Sair
             </Button>
-          </header>
+          </div>
           {this.props.children}
         </>
       : <>

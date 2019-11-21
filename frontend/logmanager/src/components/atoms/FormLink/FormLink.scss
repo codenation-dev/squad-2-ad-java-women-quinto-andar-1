@@ -1,0 +1,17 @@
+@import '../../../style/style.scss';
+
+.form-link-bottom{
+    margin: 24px 0 0 0;
+    line-height: 1.6;
+    font-size: $_font-size-small;
+    text-align: center;
+    a{
+        cursor: pointer;
+        color: $_dark-purple;
+        margin-left: 4px;
+        &:hover{
+            text-decoration: underline;
+            font-weight: $_font-weight-bold;
+        }
+    }
+}

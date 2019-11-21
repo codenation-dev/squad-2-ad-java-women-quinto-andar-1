@@ -24,11 +24,11 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
         onChange={onChange}
         value={props.password}
       />
-      <Button>
+      <Button className='--form' value='Logar'>
         Logar
       </Button>
-      <FormLink>Nov@ por aqui?
-      <Link to='/sign-up'>Cadastre-se</Link>
+      <FormLink>Primeiro acesso? 
+      <Link to='/sign-up' value='Cadastre-se' placeholder='Clique para ir pra tela de cadastro'>Cadastre-se</Link>
       </FormLink>
     </Form>
   </Card>

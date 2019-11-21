@@ -16,7 +16,9 @@ class Login extends Component {
       [e.target.name]: e.target.value,
     });
   }
-
+  alterState = (response) =>{
+    console.log(response)
+  }
   onSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,12 +33,13 @@ class Login extends Component {
         password
       };
 
-      const response = await RequestService.login(body);
+      const response = RequestService.login(body, this.alterState);
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
       history.push('/logs');
     } catch (e) {
-      alert(e.message);
+      console.log(e)
+      //alert(e.message);
     }
   }
 

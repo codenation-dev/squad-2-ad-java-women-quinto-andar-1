@@ -5,12 +5,23 @@
     padding: 16px;
     font-size: $_font-size-small;
     font-family: $_font-primary;
-
-    &.-search{
+    color: $_text-color-input;
+    
+    &.--login{
+        border-radius: $_radius;
+        width: 100%;
+        box-shadow: $_shadow;
+        margin-bottom: 4px;
+        &:focus{
+            box-shadow: $_shadow-purple-2;
+        }
+    }  
+    &.--search{
         border: none !important;
         border-radius: 21px;
         width: 100%;
         box-shadow: $_shadow;
+        padding-left: 40px;
         &::placeholder{
             opacity: .8;
         }

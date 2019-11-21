@@ -1,25 +1,5 @@
 @import '../../../style/style.scss';
 
-.btn{
-    color: #ffffff;
-    background-color: hsla(291, 64%, 42%, 0.89);
-    cursor: pointer;
-    border-radius: 7px;
-    border: 3px solid hsla(291, 64%, 42%, 0.075);
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
-    width: 100%;
-}
-
-.btn:hover {
-    background-color: #9c27b0;
-    border: 3px solid #9c27b0;
-    color: #ffffff;
-}
 .button{
     font-family: $_font-primary;
     font-size: $_font-size-base;
@@ -28,6 +8,17 @@
     margin: 10px;
     transition: 0.25s ease;
     cursor: pointer;
+    text-transform: uppercase;
+    &.--form{
+        background-color: $_purple;
+        color: $_white;
+        width: 100%;
+        margin: 32px 0px 0px;
+        border-radius: $_radius;
+        &:hover{
+            background-color: $_dark-purple;
+        }
+    }
     &.--change{
         width: 100px;
         background: transparent;

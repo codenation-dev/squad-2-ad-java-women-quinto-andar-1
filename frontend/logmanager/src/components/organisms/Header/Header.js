@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.scss';
 import { User } from 'react-feather';
+import Menu from '../Menu/Menu';
 
 const Header = (props) => (
     <header className='header'>
@@ -10,6 +11,7 @@ const Header = (props) => (
         </div>
         <div className='header-right'>
             <User />
+            <Menu />
         </div>
     </header>
 );

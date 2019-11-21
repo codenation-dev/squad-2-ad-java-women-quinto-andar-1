@@ -31,7 +31,7 @@ const SignUpForm = ({onSubmit, onChange, ...props}) => (
         onChange={onChange}
         value={props.password}
       />
-      <Button>
+      <Button className='--form'>
         Cadastrar
       </Button>
       <FormLink> 

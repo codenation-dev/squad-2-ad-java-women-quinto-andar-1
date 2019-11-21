@@ -5,9 +5,11 @@ $_white:              #fff !default;
 $_black:              #000 !default;
 $_light-grey:		  #FAFAFA !default;
 $_grey:		          #DADADA !default;
+$_dark-grey:          #212121 !default;
 $_light-purple:       #D1C4E9 !default;
 $_purple:             #7E57C2!default;
-$_dark-purple:        #1A0D30 !default;
+$_dark-purple:        #483071 !default;
+//$_dark-purple:        #1A0D30 !default;
 $_yellow:             #FFEE99 !default;
 $_dark-yellow:        #FF8113 !default;
 $_shaddow-yellow:     #FFE149 !default;
@@ -16,7 +18,7 @@ $_dark-red:           #A10806 !default;
 $_shaddow-red:        rgba(255, 0, 0, 0.5) !default;
 $_purple-2:           #A77BF4 !default;
 $_dark-purple-2:      #834DDF !default;
-$_shadow-purple-2:   $_purple-2;
+$_shadow-purple-2:      0px 0px 10px rgba(126, 87, 194, 0.5);
 
 /**
  * Typography
@@ -41,9 +43,19 @@ $_font-weight-bold:		700 !default;
  */
 $_body-bg:			$_white;
 $_text-color-base:	$_black;
+$_text-color-input: $_dark-grey;
 
 /**
  * Custom styles
  */
 $_radius:       5px !default;
-$_shadow:      0px 0px 10px rgba(0, 0, 0, 0.09)
+$_shadow:      0px 0px 10px rgba(0, 0, 0, 0.09);
+
+
+/**
+* Media Query
+*/
+
+$_media-phone: 500px !default;
+$_media-tablet: 768px !default;
+$_media-desktop: 1024px !default;

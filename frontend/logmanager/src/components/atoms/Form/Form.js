@@ -1,8 +1,8 @@
 import React from 'react';
-import './Form.css';
+import './Form.scss';
 
 const Form = props => (
-	<form onSubmit={props.onSubmit}>
+	<form className='form' onSubmit={props.onSubmit}>
 		{props.children}
 	</form>
 );

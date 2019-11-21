@@ -29,6 +29,12 @@
             border-color: $_purple-2 !important;
             box-shadow: 0 0 0 1px $_purple-2 !important;
 
+            @media screen and(max-width: $_media-phone) {
+                span.css-1okebmr-indicatorSeparator{
+                    display: none;
+                }
+            }
+            
         }
         .css-26l3qy-menu{
 
@@ -54,8 +60,13 @@
         svg{
             position: absolute;
             top: 10px;
-            right: 14px;
+            left: 10px;
             color: $_grey;
         }
+        @media screen and(max-width: $_media-phone) {
+            width: 90%;
+            position: absolute;
+            top: 110px;
+          }
     }
 }

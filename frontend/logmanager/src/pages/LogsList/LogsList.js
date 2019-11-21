@@ -227,6 +227,7 @@ class LogsList extends Component {
 
   alterState = (response) =>{
     this.setState({ logs: response.data })
+    console.log(response.data)
   }
 
   async handleOnSearch(value) {

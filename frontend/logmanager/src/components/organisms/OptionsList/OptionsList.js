@@ -6,10 +6,10 @@ export const OptionsList = (props) => {
     return(
         <div className='options'>
             <div className='options-buttons'>
-                <Button className='button --change' type='button' placeholder='Clique para arquivar' value='filed'>
+                <Button className='--change' type='button' placeholder='Clique para arquivar' value='filed'>
                     Arquivar
                 </Button>
-                <Button className='button --change' type='button' name='delete' placeholder='Clique para deletar' value='deleted'>
+                <Button className='--change' type='button' name='delete' placeholder='Clique para deletar' value='deleted'>
                     deletar
                 </Button>
             </div>

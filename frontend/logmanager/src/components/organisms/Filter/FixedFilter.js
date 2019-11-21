@@ -61,7 +61,7 @@ export const FixedFilter = (props) => {
             <div className= 'filter-search'>
                 <Search />
                 <Input
-                    className = 'input -search'
+                    className = '--search'
                     name={'search'}
                     type={'search'}
                     onChange={value => setSearch(value.target.value)}

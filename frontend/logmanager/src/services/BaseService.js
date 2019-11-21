@@ -12,13 +12,13 @@ export class BaseService {
   static get = async (url, callback) => await axios.get(url, this.header).then(callback)
     .catch(e => this.handleError(e));
 
-  static post = async (url, body) => {
+  static post = async (url, body, callback) => {
     if (url.includes('user')) {
-     return await axios.post(url, body)
+     return await axios.post(url, body).then(callback)
       .catch(e => this.handleError(e)); 
     }
     
-    return await axios.post(url, { ...this.header, ...body })
+    return await axios.post(url, { ...this.header, ...body }).then(callback)
       .catch(e => this.handleError(e));
   }
 

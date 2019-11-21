@@ -6,9 +6,6 @@ import { Search } from 'react-feather';
 
 const Filter = ({filters}) => {
 
-    // const [enviroment, setEnviroment] = useState(optionsEnviroment[0])
-    // const [order, setOrder] = useState()
-    // const [find, setFind] = useState()
     const [selects, setSelects] = useState({})
     const [search, setSearch] = useState('')
     const [timer, setTimer] = useState()
@@ -26,7 +23,7 @@ const Filter = ({filters}) => {
         clearTimeout(timer)
         if(!search) return
         setTimer(setTimeout(()=>{
-            // onSearch({enviroment, order, find, search})
+            onSearch({enviroment, order, find, search})
         },TIMEOUT))
     }
 
