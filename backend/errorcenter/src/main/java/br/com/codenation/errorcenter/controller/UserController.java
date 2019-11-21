@@ -2,7 +2,6 @@ package br.com.codenation.errorcenter.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.codenation.errorcenter.dtos.responses.LoggedUserResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.codenation.errorcenter.dtos.requests.UserLoginRequestDTO;
+import br.com.codenation.errorcenter.dtos.responses.LoggedUserResponseDTO;
+import br.com.codenation.errorcenter.exception.ResourceNotFoundException;
 import br.com.codenation.errorcenter.models.User;
 import br.com.codenation.errorcenter.service.UserService;
 
@@ -24,13 +25,13 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<?> insertUsers(@RequestBody User user){
+	public ResponseEntity<?> insertUsers(@RequestBody User user) throws ResourceNotFoundException {
 		userService.save(user);
 		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO body, HttpServletResponse response) {
+	public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO body, HttpServletResponse response) throws ResourceNotFoundException {
 		try {
 			String email = body.email;
 			String password = body.password;

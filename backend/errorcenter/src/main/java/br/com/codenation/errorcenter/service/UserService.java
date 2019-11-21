@@ -3,16 +3,17 @@ package br.com.codenation.errorcenter.service;
 import java.util.Optional;
 import java.util.UUID;
 
-import br.com.codenation.errorcenter.dtos.responses.LoggedUserResponseDTO;
-import br.com.codenation.errorcenter.security.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.codenation.errorcenter.dtos.responses.LoggedUserResponseDTO;
+import br.com.codenation.errorcenter.exception.ResourceNotFoundException;
 import br.com.codenation.errorcenter.models.User;
 import br.com.codenation.errorcenter.repository.UserRepository;
+import br.com.codenation.errorcenter.security.JwtToken;
 
 @Service
 @Transactional
@@ -38,7 +39,15 @@ public class UserService{
 		if (userCheck.isPresent()) {
 			/*User já cadastrado com esse email*/
 			/*TODO Retornar Exception ERROR_USER_EMAIL_EXISTS("Email já cadastrado.")*/
-		} else {
+			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+		} else if (user.getName() == null){
+			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+		} else if (user.getEmail() == null){
+			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+		} else if (user.getPassword() == null){
+			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+		}
+		else {
 			/*Manipula a senha para encriptar*/
 			String passwordEncoded = bcrypt.encode(user.getPassword());
 			user.setPassword(passwordEncoded);

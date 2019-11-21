@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import br.com.codenation.errorcenter.utils.EnumValidationException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
@@ -19,14 +20,13 @@ public class GlobalControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public MessageException handleException(Exception ex) {
-		return new MessageException(HttpStatus.BAD_REQUEST, ex.getCause().getMessage(), ex.getMessage());
-	}
-	
-	@ExceptionHandler(ResourceNotFoundException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
-	public MessageException handleResourceNotFoundException(ResourceNotFoundException ex) {
-		return new MessageException(HttpStatus.BAD_REQUEST, "Retorno nulo", "Não foi possivel listar dados pois não existe registro no banco");
+		String descricao = "";
+		for (EnumValidationException e : EnumValidationException.values()) {
+			if(e.toString().equals(ex.getMessage())){
+				descricao = e.getDescricao();
+			}
+		}
+		return new MessageException(HttpStatus.BAD_REQUEST, ex.getMessage(), descricao);
 	}
 	
 	@ExceptionHandler(ExpiredJwtException.class)
