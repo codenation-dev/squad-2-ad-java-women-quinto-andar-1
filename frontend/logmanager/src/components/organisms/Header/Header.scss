@@ -1,0 +1,21 @@
+@import '../../../style/style.scss';
+
+.header{
+    background-color: $_purple;
+    font-family: $_font-title;
+    color: $_white;
+    padding: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    h1{
+        font-size: $_font-size-large;
+        font-weight: $_font-weight-light;
+    }
+    h2{
+        font-size: $_font-size-small;
+        font-weight: $_font-weight-light;
+        color: $_grey;
+    }
+}

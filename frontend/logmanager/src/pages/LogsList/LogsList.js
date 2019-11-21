@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Loader from '../../components/molecules/Loader/Loader';
 import { RequestService } from '../../services/RequestService';
-import './LogsList.css';
+import Header from '../../components/organisms/Header/Header';
+import Loader from '../../components/molecules/Loader/Loader';
+import { FixedFilter } from '../../components/organisms/Filter/FixedFilter';
+import { LogContainer } from '../../components/molecules/logContainer/logContainer';
+import { OptionsList } from '../../components/organisms/OptionsList/OptionsList';
+import './LogsList.scss';
+
+const FILTERS = [
+  { id: 'enviroment', placeholder: 'Ambiente', options: [{ value: 'PROD', label: 'Produção' }, { value: 'DEV', label: 'Dev' }, { value: 'HOMOL', label: 'Homologação' }] },
+  { id: 'order', placeholder: 'Ordenar por', options: [{ value: 'level', label: 'Level' }, { value: 'frequency', label: 'Frequência' }] },
+  { id: 'find', placeholder: 'Buscar por', options: [{ value: 'level', label: 'Level' }, { value: 'description', label: 'Descrição' }, { value: 'origin', label: 'Origem' }] }
+]
 
 class LogsList extends Component {
   state = {
-    isLoading: true,
+    isLoading: false,
     environment: 'dev',
     orderBy: 'default',
     searchBy: 'default',
@@ -14,26 +24,28 @@ class LogsList extends Component {
     logs: []
   }
 
-  componentDidMount = async (props) => {
-    try {
-      const response = await RequestService.getLogsByEnvironment('dev');
+  // componentDidMount = async (props) => {
+  //   try {
+  //     const response = await RequestService.getLogsByEnvironment('dev');
 
-      if (response.data) {
-        const logs = response.data.map(log => ({
-          ...log,
-          isChecked: false
-        }))
-    
-        this.setState({
-          isLoading: false,
-          logs
-        });
-      }
-    } catch (e) {
-      console.log(e)
-      // this.props.history.replace('/login');
-    }
-  }
+  //     console.log(response)
+
+  //     if (response.data) {
+  //       const logs = response.data.map(log => ({
+  //         ...log,
+  //         isChecked: false
+  //       }))
+
+  //       this.setState({
+  //         isLoading: false,
+  //         logs
+  //       });
+  //     }
+  //   } catch (e) {
+  //     console.log(e)
+  //     // this.props.history.replace('/login');
+  //   }
+  // }
 
   changeEnvironment = async (e) => {
     this.setState({
@@ -162,7 +174,7 @@ class LogsList extends Component {
 
   renderLogList = (logs) => (
     <div className='d-flex fd-col'>
-      <div className='d-flex' style={{marginTop: 10}}>
+      <div className='d-flex' style={{ marginTop: 10 }}>
         <button onClick={(e) => this.changeStatus(e, 'FILED')}>Arquivar</button>
         <button onClick={(e) => this.changeStatus(e, 'DELETE')}>Apagar</button>
       </div>
@@ -174,33 +186,63 @@ class LogsList extends Component {
         <p>Ocorrências</p>
         <p>Detalhes</p>
       </div>
-      { logs.map(log => (
-          <div key={log.id} className='d-flex j-around'>
-            <input id={log.id} type='checkbox' onChange={this.handleCheckBox} />
-            <div>
-              <p style={{color: 'blue'}}>{log.level}</p>
-            </div>
-            <div>
-              <p>{log.title}</p>
-              <p>Origem: {log.origin}</p>
-              <p>Data: {log.event_date}</p>
-            </div>
-            <div>
-              <p style={{color: 'blue'}}>{log.status}</p>
-            </div>
-            <div>
-              <p>{log.frequency || 1}</p>
-            </div>
-            <div>
-              <Link to={`/logs/${log.id}`}>
-                <p>Detalhes</p>
-              </Link>
-            </div>
+      {logs.map(log => (
+        <div key={log.id} className='d-flex j-around'>
+          <input id={log.id} type='checkbox' onChange={this.handleCheckBox} />
+          <div>
+            <p style={{ color: 'blue' }}>{log.level}</p>
           </div>
-        ))
+          <div>
+            <p>{log.title}</p>
+            <p>Origem: {log.origin}</p>
+            <p>Data: {log.event_date}</p>
+          </div>
+          <div>
+            <p style={{ color: 'blue' }}>{log.status}</p>
+          </div>
+          <div>
+            <p>{log.frequency || 1}</p>
+          </div>
+          <div>
+            <Link to={`/logs/${log.id}`}>
+              <p>Detalhes</p>
+            </Link>
+          </div>
+        </div>
+      ))
       }
     </div>
   )
+
+  isSomethingInValueUndefined = (value) => {
+    return !(value != undefined && value.value != undefined)
+  }
+
+  isOrderUndefined = (value) => {
+    return this.isSomethingInValueUndefined(value.order)
+  }
+  isFindUndefined = (value) => {
+    return this.isSomethingInValueUndefined(value.find)
+  }
+
+  alterState = (response) =>{
+    this.setState({ logs: response.data })
+  }
+
+  async handleOnSearch(value) {
+    if (value.search == undefined) value.search = ''
+
+    console.log(value)
+    if (this.isOrderUndefined && this.isFindUndefined && value.search == '') {
+      RequestService.getLogsByEnvironment(value.enviroment.value, this.alterState)
+    } else if (value.find == undefined && value.search == '') {
+      RequestService.orderLogs(value.enviroment.value, value.order.value, this.alterState)
+    } else if (value.find == undefined && value.search != '') {
+      RequestService.searchLogs(value.enviroment.value, 'description', value.search, this.alterState);
+    } else {
+      RequestService.searchLogs(value.enviroment.value, value.find.value, value.search, this.alterState);
+    }
+  }
 
   render() {
     const { logs } = this.state
@@ -209,11 +251,13 @@ class LogsList extends Component {
       ? <Loader />
       : (
         <>
-          { this.renderSubMenu()}
-          { logs.length 
-            ? this.renderLogList(logs)
-            : <p>Nenhum log</p>
-          }
+          <Header title={'Olá, Jesiele Santos'} subtitle={'172yr7y47e73dhchdbhbchx'} />
+          {/* <Filter filters={FILTERS}/> */}
+          <FixedFilter onSearch={value => this.handleOnSearch(value)} />
+          <OptionsList />
+          <ul className='logContainer-ul'>
+            {logs && logs.map(log => <LogContainer {...log} />)}
+          </ul>
         </>
       )
   }

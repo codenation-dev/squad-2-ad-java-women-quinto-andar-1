@@ -9,7 +9,7 @@ export class BaseService {
     headers: { Authorization: sessionStorage.getItem("authToken") }
   }
 
-  static get = async (url) => await axios.get(url, this.header)
+  static get = async (url, callback) => await axios.get(url, this.header).then(callback)
     .catch(e => this.handleError(e));
 
   static post = async (url, body) => {

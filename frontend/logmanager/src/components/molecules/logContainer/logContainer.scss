@@ -1,0 +1,23 @@
+.log-container{
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.09);
+    padding: 16px;
+    border-radius: 5px;
+    margin: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-container .ERROR{
+    background-color: red;
+    border-radius: 12px;
+    font-size: 12px;
+    padding: 8px;
+}
+
+.log-container .INFO{
+    background-color: orange;
+    border-radius: 12px;
+    font-size: 12px;
+    padding: 8px;
+}

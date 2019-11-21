@@ -1,0 +1,9 @@
+@import '../../../style/style.scss';
+
+.options{
+    padding: 16px;
+    background-color: $_light-grey;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

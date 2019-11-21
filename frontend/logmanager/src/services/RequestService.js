@@ -7,11 +7,11 @@ export class RequestService extends BaseService {
 
   static signUp = async (body) => this.post(`${this.BASE_URL}/user`, body)
 
-  static getLogsByEnvironment = async (env) => this.get(`${this.BASE_URL}/log/${env}`)
+  static getLogsByEnvironment = async (env, callback) => this.get(`${this.BASE_URL}/log/${env}`, callback)
 
-  static searchLogs = async (env, filter, query) => this.get(`${this.BASE_URL}/log/${env}?filter=${filter}&value=${query}`)
+  static searchLogs = async (env, filter, query, callback) => this.get(`${this.BASE_URL}/log/${env}?filter=${filter}&value=${query}`, callback)
 
-  static orderLogs = async (env, order) => this.get(`${this.BASE_URL}/log/${env}?order=${order}`)
+  static orderLogs =  async (env, order, callback) => this.get(`${this.BASE_URL}/log/${env}?order=${order}`, callback)
 
   static changeStatus = async (body) => this.patch(`${this.BASE_URL}/log/status`, body)
 
