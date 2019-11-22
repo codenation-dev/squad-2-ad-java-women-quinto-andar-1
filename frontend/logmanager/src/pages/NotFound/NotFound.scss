@@ -1,0 +1,47 @@
+@import '../../style/style.scss';
+
+
+.container-box-error{
+
+  width: 423px;
+  height: 400px;
+  padding: 8px;
+  position: relative;
+}
+
+
+.container-error{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: $_purple;
+}
+
+.error-code{
+  margin: 24px 0 0 0;
+  line-height: 1.6;
+  font-size: 130px;
+  text-align: center;
+  color: $_white;
+}
+
+
+.error-menssage{
+  margin: 24px 0 0 0;
+  line-height: 1.6;
+  font-size: 25px;
+  text-align: center;
+  color: $_white;
+}
+
+
+@media screen and (max-width: $_media-phone){
+.container-box-error {
+  width: 280px;
+  height: 400px;
+}
+
+}
