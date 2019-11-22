@@ -3,6 +3,7 @@ import './Login.css';
 import LoginForm from '../../components/organisms/LoginForm/LoginForm';
 import { RequestService } from '../../services/RequestService';
 import Loader from '../../components/molecules/Loader/Loader';
+import { userNotification } from '../../errors/UserNotification';
 
 class Login extends Component {
   state = {
@@ -51,6 +52,10 @@ class Login extends Component {
       };
 
       const response = await RequestService.login(body);
+
+      if (response.status === 400) {
+        userNotification.notifyError(response.message)
+      }
 
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 

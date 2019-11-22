@@ -62,8 +62,10 @@ class LogsList extends Component {
 
     const response = await RequestService.orderLogs(this.state.environment, e.target.value);
 
+    const logs = response.data ? response.data.map(log => ({ ...log, isChecked: false })) : []
+
     this.setState({
-      logs: response.data,
+      logs,
       isLoading: false
     })
   }

@@ -1,9 +1,11 @@
 import axios from 'axios';
 export class BaseService {
   static handleError(error) {
-    // TODO: implementar sistema de notificações de erro
-    // user intercept do axios ?
-    console.log(error)
+    return {
+      status: error.response.status,
+      error: error.response.data.error,
+      message: error.response.data.message,
+    }
   }
 
   static header = () => {
