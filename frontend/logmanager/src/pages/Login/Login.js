@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import './Login.css';
 import LoginForm from '../../components/organisms/LoginForm/LoginForm';
 import { RequestService } from '../../services/RequestService';
+import Loader from '../../components/molecules/Loader/Loader';
 
 class Login extends Component {
   state = {
+    isLoading: false,
     email: '',
     password: '',
   }
@@ -16,30 +18,49 @@ class Login extends Component {
       [e.target.name]: e.target.value,
     });
   }
-  alterState = (response) =>{
-    console.log(response)
+
+  redirectToMainPage = () => {
+    const authToken = sessionStorage.getItem("authToken");
+    const { history } = this.props;
+
+    if (authToken) {
+      this.setState({
+        isLoading: false
+      })
+
+      history.push('/logs');
+    } else {
+      this.redirectToMainPage();
+    }
   }
+
   onSubmit = async (e) => {
     e.preventDefault();
 
     const { email, password } = this.state;
-    const { history } = this.props;
 
     try {
       this.validateFields(email, password);
+      this.setState({
+        isLoading: true
+      })
 
       const body = {
         email, 
         password
       };
 
-      const response = RequestService.login(body, this.alterState);
+      const response = await RequestService.login(body);
+
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
-      history.push('/logs');
+      this.redirectToMainPage()
     } catch (e) {
-      console.log(e)
-      //alert(e.message);
+      console.log('erro', e)
+
+      this.setState({
+        isLoading: false
+      })
     }
   }
 
@@ -67,13 +88,17 @@ class Login extends Component {
 
   render() {
     return (
+      <>
+        {this.state.isLoading && <Loader />}
         <LoginForm
           onSubmit={this.onSubmit}
           onChange={this.handleInputChange}
           email={this.state.email}
           password={this.state.password}
+          isLoading={this.state.isLoading}
         />
-    );
+      </>
+    )
   }
 }
 

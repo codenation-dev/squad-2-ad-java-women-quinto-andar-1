@@ -1,1 +1,27 @@
-/* login form css */
+p {
+  margin: 0;
+}
+
+.bottom-link-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin: 15px 0;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
+
+@media (max-width: 320px) {
+  .bottom-link-wrapper {
+    flex-direction: column;
+    height: 60px;
+    justify-content: space-between;
+  }
+
+  .mr-10 {
+    margin-right: 0;
+  }
+}

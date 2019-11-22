@@ -3,7 +3,7 @@ import './Field.scss';
 import Label from '../../atoms/Label/Label';
 import Input from '../../atoms/Input/Input';
 
-const Field = (props) => (
+const Field = ({ disabled, ...props }) => (
 	<div className='field'> 
     <Label>{props.label}</Label>
     <Input 
@@ -12,6 +12,7 @@ const Field = (props) => (
       type={props.type}
       onChange={props.onChange}
       value={props.value}
+      disabled={disabled}
       {...props}
     />
   </div>

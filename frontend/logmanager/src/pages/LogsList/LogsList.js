@@ -28,21 +28,19 @@ class LogsList extends Component {
   //   try {
   //     const response = await RequestService.getLogsByEnvironment('dev');
 
-  //     console.log(response)
-
   //     if (response.data) {
   //       const logs = response.data.map(log => ({
   //         ...log,
   //         isChecked: false
   //       }))
-
+    
   //       this.setState({
   //         isLoading: false,
   //         logs
   //       });
   //     }
   //   } catch (e) {
-  //     console.log(e)
+  //     console.log(e);
   //     // this.props.history.replace('/login');
   //   }
   // }
@@ -137,7 +135,13 @@ class LogsList extends Component {
     }
 
     await RequestService.changeStatus(body)
-    await RequestService.getLogsByEnvironment(this.state.environment)
+    const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
+
+    if (updatedLogs.data) {
+      this.setState({
+        logs: updatedLogs.data
+      })
+    }
   }
 
   renderSubMenu = () => (

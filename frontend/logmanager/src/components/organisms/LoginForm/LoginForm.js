@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 import './LoginForm.css';
 import Card from '../../atoms/Card/Card';
 import Form from '../../atoms/Form/Form';
@@ -7,7 +6,7 @@ import Field from '../../molecules/Field/Field';
 import Button from '../../atoms/Button/Button';
 import FormLink from '../../atoms/FormLink/FormLink';
 
-const LoginForm = ({onSubmit, onChange, ...props}) => (
+const LoginForm = ({onSubmit, onChange, isLoading, ...props}) => (
 	<Card>
     <Form onSubmit={onSubmit}>
       <Field
@@ -16,6 +15,7 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
         type="text"
         onChange={onChange}
         value={props.email}
+        disabled={isLoading}
       />
       <Field
         label="Senha"
@@ -23,13 +23,15 @@ const LoginForm = ({onSubmit, onChange, ...props}) => (
         type="password"
         onChange={onChange}
         value={props.password}
+        disabled={isLoading}
       />
-      <Button className='--form' value='Logar'>
+      <Button disabled={isLoading} className='--form' value='Logar'>
         Logar
       </Button>
-      <FormLink>Primeiro acesso? 
-      <Link to='/sign-up' value='Cadastre-se' placeholder='Clique para ir pra tela de cadastro'>Cadastre-se</Link>
-      </FormLink>
+      <p>Chegou agora?</p>
+        <FormLink route='/sign-up' isDisabled={isLoading}>
+          Cadastre-se
+        </FormLink>
     </Form>
   </Card>
 );
