@@ -31,4 +31,9 @@
             border-bottom: 2px solid $_dark-purple-2;
         }
     }
+    &.disabled {
+        cursor: none;
+        pointer-events: none;
+        opacity: 0.5;
+    }
 }

@@ -13,5 +13,11 @@
             text-decoration: underline;
             font-weight: $_font-weight-bold;
         }
+        &.notClickable {
+            pointer-events: none;
+            opacity: .5;
+            text-decoration: none;
+            font-weight: $_font-weight-bold;
+          }
     }
 }
