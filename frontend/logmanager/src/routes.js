@@ -5,11 +5,11 @@ import SignUp from './pages/SignUp/SignUp';
 import LogsList from './pages/LogsList/LogsList';
 import LogDetail from './pages/LogDetail/LogDetail';
 import NotFound from './pages/NotFound/NotFound';
-import Menu from './components/organisms/Menu/Menu';
+import Header from './components/organisms/Header/Header';
 
 const Routes = (props) => (
   <BrowserRouter>
-    <Menu onLogOut={props.onLogOut}>
+    <Header onLogOut={props.onLogOut}>
       <Switch>
         <Route path='/' exact component={Login} />
         <Route path='/login' exact component={Login} />
@@ -18,7 +18,7 @@ const Routes = (props) => (
         <Route path='/logs/:id' exact component={LogDetail} />
         <Route component={NotFound} />
       </Switch>
-    </Menu>
+    </Header>
   </BrowserRouter>
 );
 

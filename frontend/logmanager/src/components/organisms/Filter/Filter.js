@@ -23,7 +23,7 @@ const Filter = ({filters}) => {
         clearTimeout(timer)
         if(!search) return
         setTimer(setTimeout(()=>{
-            onSearch({enviroment, order, find, search})
+            onSearch({environment, order, find, search})
         },TIMEOUT))
     }
 

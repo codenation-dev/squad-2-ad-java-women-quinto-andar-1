@@ -10,30 +10,29 @@ const optionsEnviroment = [
     { value: 'HOMOL', label: 'Homologação' }
 ]
 const optionsOrder = [
-    { value: undefined, label: 'Ordenar por' },
+    { value: undefined, label: 'Ordenar' },
     { value: 'level', label: 'Level' },
     { value: 'frequency', label: 'Frequência' }
 ]
 const optionsFind = [
-    { value: undefined, label: 'Buscar por' },
+    { value: undefined, label: 'Buscar' },
     { value: 'level', label: 'Level' },
     { value: 'description', label: 'Descrição' },
     { value: 'origin', label: 'Origem' }
 ]
 
-
 export const FixedFilter = (props) => {
 
-    const [enviroment, setEnviroment] = useState(optionsEnviroment[0])
+    const [environment, setEnviroment] = useState(optionsEnviroment[0])
     const [order, setOrder] = useState()
     const [find, setFind] = useState()
     const [search, setSearch] = useState('')
     const [timer, setTimer] = useState()
-    const TIMEOUT = 3000
+    const TIMEOUT = 2000
 
     useEffect(()=>{
-        props.onSearch({enviroment, order, find, search})
-    },[enviroment, order, find])
+        props.onSearch({environment, order, find, search})
+    },[environment, order, find])
 
     useEffect(()=>{
         resetTimer()
@@ -41,9 +40,9 @@ export const FixedFilter = (props) => {
 
     const resetTimer = () =>{
         clearTimeout(timer)
-        if(!search) return
+        if(!search) setFind(undefined)
         setTimer(setTimeout(()=>{
-            onSearch({enviroment, order, find, search})
+            onSearch({environment, order, find, search})
         },TIMEOUT))
     }
 
@@ -53,11 +52,11 @@ export const FixedFilter = (props) => {
 
     return(
         <div className='filter'>
-
-            <Select className='filter-select _env' onChange={value => setEnviroment(value)} value={enviroment} placeholder={optionsEnviroment[0].label} defaultValue = {optionsEnviroment[0].value} options={optionsEnviroment} />
-            <Select className='filter-select _order' onChange={value => setOrder(value)} value={order} placeholder={optionsOrder[0].label} defaultValue = {optionsOrder[0].value} options={optionsOrder} />
-            <Select className='filter-select _find' onChange={value => setFind(value)} value={find} placeholder= {optionsFind[0].label} defaultValue = {optionsFind[0].value} options={optionsFind} />
-
+            <div className='filter-selects'>
+                <Select className='filter-selects-select _env' onChange={value => setEnviroment(value)} value={environment} placeholder={optionsEnviroment[0].label} defaultValue = {optionsEnviroment[0].value} options={optionsEnviroment} />
+                <Select className='filter-selects-select _order' onChange={value => setOrder(value)} value={order} placeholder={optionsOrder[0].label} defaultValue = {optionsOrder[0].value} options={optionsOrder} />
+                <Select className='filter-selects-select _find' onChange={value => setFind(value)} value={find} placeholder= {optionsFind[0].label} defaultValue = {optionsFind[0].value} options={optionsFind} />
+            </div>
             <div className= 'filter-search'>
                 <Search />
                 <Input

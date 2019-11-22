@@ -52,6 +52,8 @@ class Login extends Component {
 
       const response = await RequestService.login(body);
 
+      sessionStorage.setItem("name", response.data["name"])
+      sessionStorage.setItem("tokenAccess", response.data["tokenAccess"])
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
       this.redirectToMainPage()

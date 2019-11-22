@@ -12,13 +12,21 @@
     h1{
         font-size: $_font-size-large;
         font-weight: $_font-weight-light;
+        span{
+            font-weight: 500;
+        }
     }
     h2{
         font-size: $_font-size-small;
         font-weight: $_font-weight-light;
         color: $_grey;
     }
-    @media screen and(max-width: $_media-phone) {
-        height: 130px;
+    @media screen and(max-width: $_media-tablet) {
+        height: 110px;
+        padding: 18px;
+        line-height: 1.5;
+        h2{
+            font-size: 12px;
+        }
       }
 }

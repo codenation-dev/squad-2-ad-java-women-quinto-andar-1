@@ -23,12 +23,10 @@
         width: 100px;
         background: transparent;
         height: 32px;
-        color: $_purple;
-        line-height: 10px;
-        border: none;
-        border-bottom: 1px solid $_purple;
+        color: $_dark-purple;
         &:hover{
             border-bottom: 2px solid $_dark-purple-2;
+            color: $_purple;
         }
     }
     &.disabled {

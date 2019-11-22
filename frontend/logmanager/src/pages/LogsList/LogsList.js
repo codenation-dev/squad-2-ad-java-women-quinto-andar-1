@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { RequestService } from '../../services/RequestService';
-import Header from '../../components/organisms/Header/Header';
 import Loader from '../../components/molecules/Loader/Loader';
+import Button from '../../components/atoms/Button/Button';
+import Input from '../../components/atoms/Input/Input';
 import { FixedFilter } from '../../components/organisms/Filter/FixedFilter';
 import { LogContainer } from '../../components/molecules/logContainer/logContainer';
 import { OptionsList } from '../../components/organisms/OptionsList/OptionsList';
 import './LogsList.scss';
 
-const FILTERS = [
-  { id: 'enviroment', placeholder: 'Ambiente', options: [{ value: 'PROD', label: 'Produção' }, { value: 'DEV', label: 'Dev' }, { value: 'HOMOL', label: 'Homologação' }] },
-  { id: 'order', placeholder: 'Ordenar por', options: [{ value: 'level', label: 'Level' }, { value: 'frequency', label: 'Frequência' }] },
-  { id: 'find', placeholder: 'Buscar por', options: [{ value: 'level', label: 'Level' }, { value: 'description', label: 'Descrição' }, { value: 'origin', label: 'Origem' }] }
-]
-
 class LogsList extends Component {
   state = {
     isLoading: false,
-    environment: 'dev',
-    orderBy: 'default',
-    searchBy: 'default',
-    query: '',
+    environment: 'PROD',
     logs: []
   }
 
@@ -45,53 +37,8 @@ class LogsList extends Component {
   //   }
   // }
 
-  changeEnvironment = async (e) => {
-    this.setState({
-      environment: e.target.value,
-      orderBy: 'default',
-      searchBy: 'default',
-      query: '',
-      isLoading: true
-    })
-
-    const response = await RequestService.getLogsByEnvironment(e.target.value);
-
-    this.setState({
-      logs: response.data,
-      isLoading: false
-    })
-  }
-
-  orderLogsBy = async (e) => {
-    this.setState({
-      orderBy: e.target.value,
-      searchBy: 'default',
-      query: '',
-      isLoading: true
-    })
-
-    const response = await RequestService.orderLogs(this.state.environment, e.target.value);
-
-    this.setState({
-      logs: response.data,
-      isLoading: false
-    })
-  }
-
-  searchBy = (e) => {
-    this.setState({
-      searchBy: e.target.value,
-      orderBy: 'default',
-    })
-  }
-
-  handleQuery = (e) => {
-    this.setState({
-      query: e.target.value,
-    })
-  }
-
   handleCheckBox = (e) => {
+    console.log('ENTROU NO HANDLE')
     const logs = [...this.state.logs]
     logs.forEach(log => {
       if (log.id === parseInt(e.target.id, 10)) {
@@ -101,25 +48,6 @@ class LogsList extends Component {
 
     this.setState({
       logs,
-    })
-  }
-
-  searchLogs = async (e) => {
-    e.preventDefault();
-    this.setState({
-      isLoading: true
-    })
-
-    const { environment, searchBy, query } = this.state;
-
-    if (searchBy === 'default') {
-      return alert('Selecione o método de busca!');
-    }
-
-    const response = await RequestService.searchLogs(environment, searchBy, query);
-    this.setState({
-      logs: response.data,
-      isLoading: false
     })
   }
 
@@ -133,7 +61,6 @@ class LogsList extends Component {
       ids: logsIds,
       status,
     }
-
     await RequestService.changeStatus(body)
     const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
 
@@ -143,80 +70,6 @@ class LogsList extends Component {
       })
     }
   }
-
-  renderSubMenu = () => (
-    <>
-      <div className='d-flex j-around'>
-        <div>
-          <select onChange={this.changeEnvironment} value={this.state.environment}>
-            <option value='prod'>Produção</option>
-            <option value='homol'>Homologação</option>
-            <option value='dev'>Dev</option>
-          </select>
-        </div>
-        <div>
-          <select onChange={this.orderLogsBy} value={this.state.orderBy}>
-            <option value='default'>Ordenar por</option>
-            <option value='level'>Level</option>
-            <option value='frequency'>Frequência</option>
-          </select>
-        </div>
-        <div>
-          <form onSubmit={this.searchLogs}>
-            <select onChange={this.searchBy} value={this.state.searchBy}>
-              <option value='default'>Buscar por</option>
-              <option value='level'>Level</option>
-              <option value='description'>Descrição</option>
-              <option value='origin'>Origem</option>
-            </select>
-            <input type='text' value={this.state.query} onChange={this.handleQuery} />
-          </form>
-        </div>
-      </div>
-    </>
-  )
-
-  renderLogList = (logs) => (
-    <div className='d-flex fd-col'>
-      <div className='d-flex' style={{ marginTop: 10 }}>
-        <button onClick={(e) => this.changeStatus(e, 'FILED')}>Arquivar</button>
-        <button onClick={(e) => this.changeStatus(e, 'DELETE')}>Apagar</button>
-      </div>
-      <div className='d-flex j-around'>
-        <p>Selecionar</p>
-        <p>Nível</p>
-        <p>Título</p>
-        <p>Status</p>
-        <p>Ocorrências</p>
-        <p>Detalhes</p>
-      </div>
-      {logs.map(log => (
-        <div key={log.id} className='d-flex j-around'>
-          <input id={log.id} type='checkbox' onChange={this.handleCheckBox} />
-          <div>
-            <p style={{ color: 'blue' }}>{log.level}</p>
-          </div>
-          <div>
-            <p>{log.title}</p>
-            <p>Origem: {log.origin}</p>
-            <p>Data: {log.event_date}</p>
-          </div>
-          <div>
-            <p style={{ color: 'blue' }}>{log.status}</p>
-          </div>
-          <div>
-            <p>{log.frequency || 1}</p>
-          </div>
-          <div>
-            <Link to={`/logs/${log.id}`}>
-              <p>Detalhes</p>
-            </Link>
-          </div>
-        </div>
-      ))
-      }
-    </div>
-  )
 
   isSomethingInValueUndefined = (value) => {
     return !(value != undefined && value.value != undefined)
@@ -230,22 +83,27 @@ class LogsList extends Component {
   }
 
   alterState = (response) =>{
-    this.setState({ logs: response.data })
-    console.log(response.data)
+    const logs = response.data.map(log => ({
+               ...log,
+               isChecked: false
+    }))
+    this.setState({ logs, isLoading: false})
   }
 
   async handleOnSearch(value) {
+    this.setState({
+      environment: value.environment.value
+    })
     if (value.search == undefined) value.search = ''
-
-    console.log(value)
+    
     if (this.isOrderUndefined && this.isFindUndefined && value.search == '') {
-      RequestService.getLogsByEnvironment(value.enviroment.value, this.alterState)
+      RequestService.getLogsByEnvironment(value.environment.value, this.alterState)
     } else if (value.find == undefined && value.search == '') {
-      RequestService.orderLogs(value.enviroment.value, value.order.value, this.alterState)
+      RequestService.orderLogs(value.environment.value, value.order.value, this.alterState)
     } else if (value.find == undefined && value.search != '') {
-      RequestService.searchLogs(value.enviroment.value, 'description', value.search, this.alterState);
+      RequestService.searchLogs(value.environment.value, 'description', value.search, this.alterState);
     } else {
-      RequestService.searchLogs(value.enviroment.value, value.find.value, value.search, this.alterState);
+      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.alterState);
     }
   }
 
@@ -256,12 +114,30 @@ class LogsList extends Component {
       ? <Loader />
       : (
         <>
-          <Header title={'Olá, Jesiele Santos'} subtitle={'172yr7y47e73dhchdbhbchx'} />
-          {/* <Filter filters={FILTERS}/> */}
           <FixedFilter onSearch={value => this.handleOnSearch(value)} />
-          <OptionsList />
+          <OptionsList onClickedStatus={(e) => this.changeStatus(e, e.value)}>
+          <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'FILED')} alt='Clique para arquivar'>
+                    Arquivar
+                </Button>
+                <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'DELETE')} alt='Clique para deletar'>
+                    deletar
+                </Button>
+          </OptionsList>
           <ul className='logContainer-ul'>
-            {logs && logs.map(log => <LogContainer {...log} />)}
+            {logs && logs.map(log => 
+                <div key={log.id} className='log-container'>
+                  <div className='left'>
+                    <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
+                    <p className={'log-container-level ' + log.level}>{log.level}</p>
+                  </div>
+                  <div className='log-container-infos'>
+                      <p>{log.title}</p>
+                      <p>{log.origin}</p>
+                      <p>{log.event_date}</p>
+                  </div>
+                  <p className='log-container-frequency'>{log.frequency}</p>
+              </div>
+            )}
           </ul>
         </>
       )
