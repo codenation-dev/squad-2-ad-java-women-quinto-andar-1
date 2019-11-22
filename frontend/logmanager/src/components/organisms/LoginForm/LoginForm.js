@@ -28,9 +28,8 @@ const LoginForm = ({onSubmit, onChange, isLoading, ...props}) => (
       <Button disabled={isLoading} className='--form' value='Logar'>
         Logar
       </Button>
-      <p>Chegou agora?</p>
-        <FormLink route='/sign-up' isDisabled={isLoading}>
-          Cadastre-se
+        <FormLink route='/sign-up' isDisabled={isLoading} value='Chegou agora?'>
+        Cadastre-se
         </FormLink>
     </Form>
   </Card>
