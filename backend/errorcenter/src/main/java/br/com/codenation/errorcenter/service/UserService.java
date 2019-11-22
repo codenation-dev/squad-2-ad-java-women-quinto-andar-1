@@ -33,19 +33,16 @@ public class UserService{
 
 	public void save(User user) {
 		
-		/*Verifica se o email já existe*/
 		Optional<User> userCheck = findByEmail(user.getEmail());
 		
 		if (userCheck.isPresent()) {
-			/*User já cadastrado com esse email*/
-			/*TODO Retornar Exception ERROR_USER_EMAIL_EXISTS("Email já cadastrado.")*/
 			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
 		} else if (user.getName() == null){
-			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+			throw new ResourceNotFoundException("ERROR_USER_SAVE_NAME");
 		} else if (user.getEmail() == null){
-			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+			throw new ResourceNotFoundException("ERROR_USER_SAVE_EMAIL");
 		} else if (user.getPassword() == null){
-			throw new ResourceNotFoundException("ERROR_USER_EMAIL_EXISTS");
+			throw new ResourceNotFoundException("ERROR_USER_SAVE_PWD");
 		}
 		else {
 			/*Manipula a senha para encriptar*/
@@ -59,7 +56,7 @@ public class UserService{
 		}
 	}
 
-	public Pair<String, LoggedUserResponseDTO> authenticateUser(String email, String rawPassword) throws Exception {
+	public Pair<String, LoggedUserResponseDTO> authenticateUser(String email, String rawPassword) {
 		Optional<User> user = userRepository.findByEmail(email);
 
 		if (user.isPresent()) {
@@ -77,11 +74,9 @@ public class UserService{
 				return Pair.of(jwtToken, formattedUser);
 			}
 
-			// TODO formatar os erros pra retornar o status também
-			throw new Exception("Senha incorreta");
+			throw new ResourceNotFoundException("ERROR_USER_VALIDATE_PWD");
 		}
 
-		// TODO formatar os erros pra retornar o status também
-		throw new Exception("Usuário não encontrado");
+		throw new ResourceNotFoundException("ERROR_USER_FIND");
 	}
 }

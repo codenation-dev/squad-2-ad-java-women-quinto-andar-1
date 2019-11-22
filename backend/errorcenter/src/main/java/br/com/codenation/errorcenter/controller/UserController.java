@@ -32,19 +32,14 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody UserLoginRequestDTO body, HttpServletResponse response) throws ResourceNotFoundException {
-		try {
-			String email = body.email;
-			String password = body.password;
+		String email = body.email;
+		String password = body.password;
 
-			Pair<String, LoggedUserResponseDTO> authResponse = userService.authenticateUser(email, password);
+		Pair<String, LoggedUserResponseDTO> authResponse = userService.authenticateUser(email, password);
 
-			response.addHeader("Access-Control-Expose-Headers", "Authorization");
-			response.addHeader("Authorization", "Bearer " + authResponse.getFirst());
+		response.addHeader("Access-Control-Expose-Headers", "Authorization");
+		response.addHeader("Authorization", "Bearer " + authResponse.getFirst());
 
-			return new ResponseEntity<>(authResponse.getSecond(), HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO: fazer o tratamento correto dos erros
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
+		return new ResponseEntity<>(authResponse.getSecond(), HttpStatus.OK);
 	}
 }

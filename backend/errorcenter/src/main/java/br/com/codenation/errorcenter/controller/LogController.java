@@ -33,7 +33,7 @@ public class LogController {
 
     // Exemplo: {url-base}/log?id=9
     @GetMapping
-    public ResponseEntity<?> getLogById(@RequestParam("id") Long id) throws Exception {
+    public ResponseEntity<?> getLogById(@RequestParam("id") Long id) throws ResourceNotFoundException {
         return new ResponseEntity<>(logService.getLogById(id), HttpStatus.OK);
     }
 
