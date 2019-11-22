@@ -6,6 +6,7 @@ import LogsList from './pages/LogsList/LogsList';
 import LogDetail from './pages/LogDetail/LogDetail';
 import NotFound from './pages/NotFound/NotFound';
 import Header from './components/organisms/Header/Header';
+import Error500 from './pages/Error500/Error500';
 
 const Routes = (props) => (
   <BrowserRouter>
@@ -16,7 +17,8 @@ const Routes = (props) => (
         <Route path='/sign-up' exact component={SignUp} />
         <Route path='/logs' exact component={LogsList} />
         <Route path='/logs/:id' exact component={LogDetail} />
-        <Route component={NotFound} />
+        <Route path='/error' exact component={NotFound} />
+        <Route path='/error500' exact component={Error500} />
       </Switch>
     </Header>
   </BrowserRouter>
