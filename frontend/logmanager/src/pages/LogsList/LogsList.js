@@ -13,6 +13,7 @@ class LogsList extends Component {
   state = {
     isLoading: false,
     environment: 'PROD',
+    frequency: false,
     logs: []
   }
 
@@ -50,7 +51,6 @@ class LogsList extends Component {
       logs,
     })
   }
-
   changeStatus = async (e, status) => {
     e.preventDefault();
 
@@ -83,28 +83,38 @@ class LogsList extends Component {
   }
 
   alterState = (response) =>{
-    const logs = response.data.map(log => ({
-               ...log,
-               isChecked: false
-    }))
-    this.setState({ logs, isLoading: false})
+    console.log(response)
+    try{
+      const logs = response.data.map(log => ({
+        ...log,
+        isChecked: false
+      }))
+      this.setState({ logs, isLoading: false})
+    }catch(e){
+      console.log('CATCH: ' + e)
+      this.props.history.replace('/login');
+    }
+    
   }
 
   async handleOnSearch(value) {
     this.setState({
-      environment: value.environment.value
+      environment: value.environment.value,
+      frequency: false
     })
-    if (value.search == undefined) value.search = ''
     
-    if (this.isOrderUndefined && this.isFindUndefined && value.search == '') {
-      RequestService.getLogsByEnvironment(value.environment.value, this.alterState)
-    } else if (value.find == undefined && value.search == '') {
-      RequestService.orderLogs(value.environment.value, value.order.value, this.alterState)
-    } else if (value.find == undefined && value.search != '') {
-      RequestService.searchLogs(value.environment.value, 'description', value.search, this.alterState);
-    } else {
-      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.alterState);
-    }
+      if (value.search == undefined) value.search = ''
+
+      if (this.isOrderUndefined(value) && this.isFindUndefined(value) && value.search == '') {
+        RequestService.getLogsByEnvironment(value.environment.value, this.alterState)
+      } else if (value.find == undefined && value.search == '') {
+        this.setState({frequency: true})
+        RequestService.orderLogs(value.environment.value, value.order.value, this.alterState)
+      } else if (value.find == undefined && value.search != '') {
+        RequestService.searchLogs(value.environment.value, 'description', value.search, this.alterState);
+      } else {
+        RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.alterState);
+      }
   }
 
   render() {
@@ -125,9 +135,9 @@ class LogsList extends Component {
           </OptionsList>
           <ul className='logContainer-ul'>
             {logs && logs.map(log => 
-                <div key={log.id} className='log-container'>
+                <div key={'log' +log.id} className='log-container'>
                   <div className='left'>
-                    <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
+                      <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
                     <p className={'log-container-level ' + log.level}>{log.level}</p>
                   </div>
                   <div className='log-container-infos'>
@@ -135,7 +145,10 @@ class LogsList extends Component {
                       <p>{log.origin}</p>
                       <p>{log.event_date}</p>
                   </div>
-                  <p className='log-container-frequency'>{log.frequency}</p>
+                  {this.state.frequency ? <p className='log-container-frequency'>{log.frequency}</p> : ''}
+                  {this.state.frequency ? 
+                     '' : <div><Link to={`/logs/${log.id}`}><p >Detalhes</p></Link></div>
+                  }
               </div>
             )}
           </ul>

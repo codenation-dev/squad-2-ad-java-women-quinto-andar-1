@@ -28,6 +28,9 @@
             border-bottom: 2px solid $_dark-purple-2;
             color: $_purple;
         }
+        @media screen and(max-width: $_media-phone) {
+            //border-bottom: 1px solid $_dark-yellow;
+        }
     }
     &.disabled {
         cursor: none;
