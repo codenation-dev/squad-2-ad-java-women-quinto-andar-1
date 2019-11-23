@@ -7,7 +7,7 @@ export const OptionsList = (props) => {
             <div className='options-buttons'>
                 {props.children}
             </div>
-            <div className='options-icons'></div>
+            {/* <div className='options-icons'></div> */}
         </div>
     )
 }

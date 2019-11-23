@@ -15,9 +15,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
             cursor: pointer;
             font-size: $_font-size-small;
-            overflow: auto;
             .left{
                 display: flex;
                 flex-direction: row;
@@ -32,30 +32,71 @@
                 text-transform: lowercase;
                 letter-spacing: 2px;
                 margin-left: 10px;
+                @media screen and(max-width: $_media-phone) {
+                    font-size: 0;
+                    text-transform: uppercase;
+                    font-weight: $_font-weight-bold;
+                    width: 32px !important;
+                    letter-spacing: 0 !important;
+                }
                 &.ERROR{
                     background-color: $_red;
                     color: $_dark-red;
                     box-shadow: 0px 0px 10px $_shaddow-red;
+                    @media screen and(max-width: $_media-phone) {
+                        &::after{
+                            content: "E";
+                            font-size: $_font-size-small;
+                        }
+                    }
                 }
                 &.INFO{
                     background-color: $_info;
                     color: $_info-text;
                     box-shadow: 0px 0px 10px $_info-shadow;
+                    @media screen and(max-width: $_media-phone) {
+                        &::after{
+                            content: "I";
+                            font-size: $_font-size-small;
+                            letter-spacing: 0;
+                        }
+                    }
                 }
                 &.DEBUG{
                     background-color: $_purple-2;
                     color: $_darker-purple;
                     box-shadow: 0px 0px 10px $_shadow-purple-2;
+                    @media screen and(max-width: $_media-phone) {
+                        &::after{
+                            content: "D";
+                            font-size: $_font-size-small;
+                            letter-spacing: 0;
+                        }
+                    }
                 }
                 &.WARN{
                     background-color: $_yellow;
                     color: $_dark-yellow;
                     box-shadow: 0px 0px 10px $_shaddow-yellow;
+                    @media screen and(max-width: $_media-phone) {
+                        &::after{
+                            content: "W";
+                            font-size: $_font-size-small;
+                            letter-spacing: 0;
+                        }
+                    }
                 }
                 &.FATAL{
                     background-color: $_fatal;
                     color: $_fatal-text;
                     box-shadow: 0px 0px 10px $_fatal-shadow;
+                    @media screen and(max-width: $_media-phone) {
+                        &::after{
+                            content: "F";
+                            font-size: $_font-size-small;
+                            letter-spacing: 0;
+                        }
+                    }
                 }
             }
             &-infos{

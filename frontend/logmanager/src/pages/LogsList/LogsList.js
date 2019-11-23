@@ -8,11 +8,14 @@ import { FixedFilter } from '../../components/organisms/Filter/FixedFilter';
 import { LogContainer } from '../../components/molecules/logContainer/logContainer';
 import { OptionsList } from '../../components/organisms/OptionsList/OptionsList';
 import './LogsList.scss';
+import { NoLogSelected, ExpiredUserToken } from '../../errors/WepAppErrors';
+import { userNotification } from '../../errors/UserNotifications';
 
 class LogsList extends Component {
   state = {
     isLoading: false,
     environment: 'PROD',
+    frequency: false,
     logs: []
   }
 
@@ -50,24 +53,34 @@ class LogsList extends Component {
       logs,
     })
   }
-
   changeStatus = async (e, status) => {
-    e.preventDefault();
+    try {
+      e.preventDefault()
 
-    const logsIds = this.state.logs.filter(log => log.isChecked)
-      .map(log => log.id)
+      const logsIds = this.state.logs.filter(log => log.isChecked)
+        .map(log => log.id)
+      
+      if (!logsIds.length) {
+        throw new NoLogSelected()
+      }
+  
+      const body = {
+        ids: logsIds,
+        status,
+      }
 
-    const body = {
-      ids: logsIds,
-      status,
-    }
-    await RequestService.changeStatus(body)
-    const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
-
-    if (updatedLogs.data) {
-      this.setState({
-        logs: updatedLogs.data
-      })
+      await RequestService.changeStatus(body);
+      const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
+  
+      if (updatedLogs.data) {
+        this.setState({
+          logs: updatedLogs.data,
+        })
+      }
+    } catch (error) {
+      if (error.name === 'NoLogSelected') {
+        userNotification.notifyError(error.message)
+      }
     }
   }
 
@@ -80,31 +93,56 @@ class LogsList extends Component {
   }
   isFindUndefined = (value) => {
     return this.isSomethingInValueUndefined(value.find)
-  }
+	}
+	
+	alterState = (response) => {
+		const logs = response.data.map(log => ({
+			...log,
+			isChecked: false
+		}))
 
-  alterState = (response) =>{
-    const logs = response.data.map(log => ({
-               ...log,
-               isChecked: false
-    }))
-    this.setState({ logs, isLoading: false})
+		this.setState({ logs, isLoading: false})
+	}
+
+  handleResponse = (response) =>{
+    try {
+      if (response.error === 'Token Expirado') {
+				throw new ExpiredUserToken();
+      }
+  
+      this.alterState(response)
+    } catch (error) {
+			if (error.name === 'ExpiredUserToken') {
+				userNotification.notifyError(error.message)
+				this.props.history.replace('/login');
+			}
+    }
   }
 
   async handleOnSearch(value) {
     this.setState({
-      environment: value.environment.value
+      environment: value.environment.value,
+      frequency: false
     })
-    if (value.search == undefined) value.search = ''
     
-    if (this.isOrderUndefined && this.isFindUndefined && value.search == '') {
-      RequestService.getLogsByEnvironment(value.environment.value, this.alterState)
+    if (value.search == undefined) value.search = ''
+		
+		let response
+    if (this.isOrderUndefined(value) && this.isFindUndefined(value) && value.search == '') {
+      response = await RequestService.getLogsByEnvironment(value.environment.value)
     } else if (value.find == undefined && value.search == '') {
-      RequestService.orderLogs(value.environment.value, value.order.value, this.alterState)
+      this.setState({
+				frequency: true
+			})
+			
+			response = await RequestService.orderLogs(value.environment.value, value.order.value)
     } else if (value.find == undefined && value.search != '') {
-      RequestService.searchLogs(value.environment.value, 'description', value.search, this.alterState);
+			response = await RequestService.searchLogs(value.environment.value, 'description', value.search);
     } else {
-      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.alterState);
-    }
+      response = await RequestService.searchLogs(value.environment.value, value.find.value, value.search);
+		}
+		
+		this.handleResponse(response)
   }
 
   render() {
@@ -125,9 +163,9 @@ class LogsList extends Component {
           </OptionsList>
           <ul className='logContainer-ul'>
             {logs && logs.map(log => 
-                <div key={log.id} className='log-container'>
+                <div key={'log' +log.id} className='log-container'>
                   <div className='left'>
-                    <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
+                      <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
                     <p className={'log-container-level ' + log.level}>{log.level}</p>
                   </div>
                   <div className='log-container-infos'>
@@ -135,7 +173,10 @@ class LogsList extends Component {
                       <p>{log.origin}</p>
                       <p>{log.event_date}</p>
                   </div>
-                  <p className='log-container-frequency'>{log.frequency}</p>
+                  {this.state.frequency ? <p className='log-container-frequency'>{log.frequency}</p> : ''}
+                  {this.state.frequency ? 
+                     '' : <div><Link to={`/logs/${log.id}`}><p >Detalhes</p></Link></div>
+                  }
               </div>
             )}
           </ul>
@@ -144,4 +185,4 @@ class LogsList extends Component {
   }
 }
 
-export default LogsList;
+export default LogsList
