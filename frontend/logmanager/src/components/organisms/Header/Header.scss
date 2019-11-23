@@ -1,32 +1,56 @@
 @import '../../../style/style.scss';
 
 .header{
-    background-color: $_purple;
-    font-family: $_font-title;
-    color: $_white;
-    padding: 32px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+	background-color: $_purple;
+	font-family: $_font-title;
+	color: $_white;
+	padding: 32px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 
-    h1{
-        font-size: $_font-size-large;
-        font-weight: $_font-weight-light;
-        span{
-            font-weight: 500;
-        }
-    }
-    h2{
-        font-size: $_font-size-small;
-        font-weight: $_font-weight-light;
-        color: $_grey;
-    }
-    @media screen and(max-width: $_media-tablet) {
-        height: 110px;
-        padding: 18px;
-        line-height: 1.5;
-        h2{
-            font-size: 12px;
-        }
-      }
+	h1{
+		font-size: $_font-size-large;
+		font-weight: $_font-weight-light;
+		span{
+			font-weight: 500;
+		}
+	}
+
+	h2{
+		font-size: $_font-size-small;
+		font-weight: $_font-weight-light;
+		color: $_grey;
+	}
+
+	.left-side-wrapper {
+		display: flex;
+
+		.logo-icon {
+			max-width: 48px;
+			margin-right: 10px;
+		}
+	}
+
+	@media screen and(max-width: $_media-tablet) {
+			height: 110px;
+			padding: 18px;
+			line-height: 1.5;
+			h2{
+				font-size: 12px;
+			}
+		}
+
+	@media screen and(max-width: $_media-phone) {
+		.logo-icon {
+			max-width: 32px;
+			max-height: 32px;
+			margin-right: 10px;
+			margin-top: 4px;
+		}
+
+		.header-right {
+			margin-top: 4px;
+		}
+	}
 }
