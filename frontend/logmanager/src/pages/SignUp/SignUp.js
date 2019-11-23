@@ -22,20 +22,20 @@ class SignUp extends Component {
     });
   }
 
-  // redirectToMainPage = () => {
-  //   const authToken = sessionStorage.getItem("authToken");
-  //   const { history } = this.props;
+  redirectToMainPage = () => {
+    const authToken = sessionStorage.getItem("authToken");
+    const { history } = this.props;
 
-  //   if (authToken) {
-  //     this.setState({
-  //       isLoading: false
-  //     })
+    if (authToken) {
+      this.setState({
+        isLoading: false
+      })
 
-  //     history.push('/logs');
-  //   } else {
-  //     this.redirectToMainPage();
-  //   }
-  // }
+      history.push('/logs');
+    } else {
+      this.redirectToMainPage();
+    }
+  }
 
   onSubmit = async (e) => {
     try {
@@ -73,13 +73,13 @@ class SignUp extends Component {
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
       // talvez não precise do redirectToMainPage
-      // this.redirectToMainPage()
+       this.redirectToMainPage()
 
       this.setState({
         isLoading: false
       })
 
-      history.push('/logs');
+      //history.push('/logs');
     } catch (e) {
       userNotification.notifyError(e.message)
 

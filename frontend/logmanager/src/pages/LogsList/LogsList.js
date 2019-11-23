@@ -120,11 +120,13 @@ class LogsList extends Component {
   }
 
   async handleOnSearch(value) {
+    
     this.setState({
       environment: value.environment.value,
       frequency: false
     })
-    
+    console.log(this.state)
+    console.log(value)
     if (value.search == undefined) value.search = ''
     
     if (this.isOrderUndefined(value) && this.isFindUndefined(value) && value.search == '') {
@@ -167,10 +169,8 @@ class LogsList extends Component {
                       <p>{log.origin}</p>
                       <p>{log.event_date}</p>
                   </div>
-                  {this.state.frequency ? <p className='log-container-frequency'>{log.frequency}</p> : ''}
-                  {this.state.frequency ? 
-                     '' : <div><Link to={`/logs/${log.id}`}><p >Detalhes</p></Link></div>
-                  }
+                  {this.state.frequency ? <p className='log-container-frequency'>{log.frequency}</p> : <div><Link to={`/logs/${log.id}`}><p >Detalhes</p></Link></div>}
+                  
               </div>
             )}
           </ul>
