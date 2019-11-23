@@ -16,7 +16,7 @@ export class BaseService {
     }
   }
 
-  static get = async (url, callback) => await axios.get(url, this.header()).then(callback)
+  static get = async (url) => await axios.get(url, this.header())
     .catch(e => this.handleError(e));
 
   static post = async (url, body) => {
