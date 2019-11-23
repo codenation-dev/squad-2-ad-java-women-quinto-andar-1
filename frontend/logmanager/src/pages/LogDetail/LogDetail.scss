@@ -1,0 +1,39 @@
+@import '../../style/style.scss';
+
+.container-detail-box{
+    margin: 10px 32px;
+    background-color: white;
+    
+    }
+
+.title-detail{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-link-bottom a {
+    cursor: pointer;
+    color: #483071;
+    margin-left: 4px;
+}
+
+
+
+.container-detail{
+    background-color: #FAFAFA;
+    overflow: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: calc(100vh - 246px);
+}
+
+
+.container-detail-subtitle{
+    margin-bottom: 20px;
+   font-weight: bold;
+}
+
+.detail-right{
+      text-align: right;
+}
