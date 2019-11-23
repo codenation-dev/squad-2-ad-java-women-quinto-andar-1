@@ -1,7 +1,7 @@
 import { BaseService } from "./BaseService";
 
 export class RequestService extends BaseService {
-  static BASE_URL = 'https://sherlog-api.herokuapp.com';
+  static BASE_URL = 'http://localhost:8080';
 
   static login = async (body) => this.post(`${this.BASE_URL}/user/login`, body)
 

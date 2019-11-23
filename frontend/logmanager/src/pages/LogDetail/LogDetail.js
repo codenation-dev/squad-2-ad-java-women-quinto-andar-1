@@ -91,7 +91,7 @@ class LogDetail extends Component {
               </div>
               <div className="detail-right">
                 <p className={'p-level ' + log.level}>{log.level}</p>
-                <p className="container-detail-subtitle">Coletado por: <br></br> {sessionStorage.getItem("tokenAccess")}</p>
+                <p className="container-detail-subtitle">Coletado por: <br></br> {log.token_access}</p>
               </div>
             </div>
           </div>
