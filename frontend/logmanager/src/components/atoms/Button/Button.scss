@@ -19,6 +19,18 @@
             background-color: $_dark-purple;
         }
     }
+    &.--white{
+        text-transform: none;
+        background-color: $_white;
+        color: $_purple;
+        width: 100%;
+        margin: 32px 0px 0px;
+        border-radius: $_radius;
+        &:hover{
+            background-color: $_dark-purple;
+            color: $_white;
+        }
+    }
     &.--change{
         width: 100px;
         background: transparent;

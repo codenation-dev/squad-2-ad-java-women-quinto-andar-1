@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Loader from '../../components/molecules/Loader/Loader';
 import { RequestService } from '../../services/RequestService';
+import { NotFoundPage, LogNotFound, InternalServerError, ExpiredUserToken } from '../../errors/WepAppErrors';
+import { userNotification } from '../../errors/UserNotifications';
 
 class LogDetail extends Component {
   constructor(props) {
@@ -16,13 +18,45 @@ class LogDetail extends Component {
       const logId = this.props.match.params.id
 
       const response = await RequestService.getLogById(logId);
+
+      this.validateResponse(response);
       
       this.setState({
         isAuthenticated: true,
         log: response.data
       })
     } catch (e) {
-      // this.props.history.replace('/login')
+      if (e.name === 'LogNotFound' || e.name === 'InternalServerError') {
+        userNotification.notifyError(e.message);
+        this.props.history.replace('/logs');
+      }
+
+      if (e.name === 'NotFoundPage') {
+        this.props.history.replace('/error404');
+      }
+
+			if (e.name === 'ExpiredUserToken') {
+				userNotification.notifyError(e.message)
+				this.props.history.replace('/login');
+			}
+    }
+  }
+
+  validateResponse = (response) => {
+    if (response.error === 'ERROR_LOG_FIND') {
+      throw new LogNotFound(response.message);
+    }
+
+    if (response.error.includes('Failed to convert')) {
+      throw new NotFoundPage('Página não encontrada');
+    }
+
+    if (response.status === 500) {
+      throw new InternalServerError();
+    }
+
+    if (response.error === 'JWT EXPIRADO') {
+      throw new ExpiredUserToken();
     }
   }
 
