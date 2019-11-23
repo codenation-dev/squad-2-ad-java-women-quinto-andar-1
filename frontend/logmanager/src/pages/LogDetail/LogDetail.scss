@@ -4,6 +4,7 @@
     margin: 10px 32px;
     padding: 30px;
     background-color: white;
+    line-height: 1.5;
 
     @media screen and(max-width: $_media-phone) {
         margin: 0;
@@ -56,4 +57,34 @@
         text-align: left;
         margin-top: 20px;
     }
+}
+.ERROR{
+    background-color: $_red;
+    color: $_dark-red;
+    box-shadow: 0px 0px 10px $_shaddow-red;
+}
+.INFO{
+    background-color: $_info;
+    color: $_info-text;
+    box-shadow: 0px 0px 10px $_info-shadow;
+}
+.DEBUG{
+    background-color: $_purple-2;
+    color: $_darker-purple;
+    box-shadow: 0px 0px 10px $_shadow-purple-2;
+}
+.WARN{
+    background-color: $_yellow;
+    color: $_dark-yellow;
+    box-shadow: 0px 0px 10px $_shaddow-yellow;
+
+}
+.FATAL{
+    background-color: $_fatal;
+    color: $_fatal-text;
+    box-shadow: 0px 0px 10px $_fatal-shadow;
+}
+.p-level{
+    width: fit-content;
+    padding: 4px;
 }

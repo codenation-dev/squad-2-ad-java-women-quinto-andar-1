@@ -96,6 +96,8 @@ class LogsList extends Component {
 	}
 	
 	alterState = (response) => {
+    console.log(this.state.frequency)
+    console.log(response.data)
 		const logs = response.data.map(log => ({
 			...log,
 			isChecked: false
@@ -123,20 +125,20 @@ class LogsList extends Component {
     
     this.setState({
       environment: value.environment.value,
-      frequency: false
+      frequency: false,
+      logs: []
     })
-    console.log(this.state)
-    console.log(value)
     if (value.search == undefined) value.search = ''
 		
 		let response
     if (this.isOrderUndefined(value) && this.isFindUndefined(value) && value.search == '') {
       response = await RequestService.getLogsByEnvironment(value.environment.value)
     } else if (value.find == undefined && value.search == '') {
-      this.setState({
-				frequency: true
-			})
-			
+      if(value.order.value === 'frequency'){
+        this.setState({
+          frequency: true
+        })
+      }  
 			response = await RequestService.orderLogs(value.environment.value, value.order.value)
     } else if (value.find == undefined && value.search != '') {
 			response = await RequestService.searchLogs(value.environment.value, 'description', value.search);
@@ -156,18 +158,18 @@ class LogsList extends Component {
         <>
           <FixedFilter onSearch={value => this.handleOnSearch(value)} />
           <OptionsList onClickedStatus={(e) => this.changeStatus(e, e.value)}>
-          <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'FILED')} alt='Clique para arquivar'>
+          <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'FILED')} alt='Clique para arquivar' disabled = {this.state.frequency} >
                     Arquivar
                 </Button>
-                <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'DELETE')} alt='Clique para deletar'>
+                <Button className='--change' type='button' onClick={(e) => this.changeStatus(e, 'DELETE')} alt='Clique para deletar' disabled = {this.state.frequency}>
                     deletar
                 </Button>
           </OptionsList>
           <ul className='logContainer-ul'>
             {logs && logs.map(log => 
-                <div key={'log' +log.id} className='log-container'>
+                <div key={'log-' +log.id + 'container'} className='log-container'>
                   <div className='left'>
-                      <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} />
+                  {!this.state.frequency ? <Input className='--checkbox' id={log.id} type='checkbox' onChange={this.handleCheckBox} /> : ''}
                     <p className={'log-container-level ' + log.level}>{log.level}</p>
                   </div>
                   <div className='log-container-infos'>
