@@ -104,15 +104,15 @@ Primeira versão do projeto entregue em 23/11/2019. Nesta versão estão dispon�
 
 #### Backend:
 
-- Criação dos Endpoints
+- Criação dos Endpoints :heavy_check_mark:
 
-- Criação do banco de dados PostgreSQL
+- Criação do banco de dados PostgreSQL :heavy_check_mark:
 
-- Implementação de Autenticação JWT
+- Implementação de Autenticação JWT :heavy_check_mark:
 
-- Tratamento de Erros e Exceptions
+- Tratamento de Erros e Exceptions :heavy_check_mark:
 
-- Deploy no Heroku
+- Deploy no Heroku :heavy_check_mark:
 
 
 ## O Squad
