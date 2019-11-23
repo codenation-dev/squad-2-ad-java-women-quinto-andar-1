@@ -1,7 +1,6 @@
 import axios from 'axios';
 export class BaseService {
   static handleError(error) {
-
     return {
       status: error.response.status,
       error: error.response.data.error,
@@ -17,10 +16,8 @@ export class BaseService {
     }
   }
 
-  static get = async (url) => {
-    return await axios.get(url, this.header())
-      .catch(e => this.handleError(e))
-  };
+  static get = async (url) => await axios.get(url, this.header())
+    .catch(e => this.handleError(e));
 
   static post = async (url, body) => {
     if (url.includes('user')) {

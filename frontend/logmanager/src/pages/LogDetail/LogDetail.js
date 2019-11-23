@@ -11,6 +11,7 @@ class LogDetail extends Component {
     super(props)
     this.state = {
       isAuthenticated: false,
+      log: {},
     }
   }
 
@@ -21,7 +22,7 @@ class LogDetail extends Component {
       const response = await RequestService.getLogById(logId);
 
       this.validateResponse(response);
-      
+
       this.setState({
         isAuthenticated: true,
         log: response.data
@@ -36,10 +37,10 @@ class LogDetail extends Component {
         this.props.history.replace('/error404');
       }
 
-			if (e.name === 'ExpiredUserToken') {
-				userNotification.notifyError(e.message)
-				this.props.history.replace('/login');
-			}
+      if (e.name === 'ExpiredUserToken') {
+        userNotification.notifyError(e.message)
+        this.props.history.replace('/login');
+      }
     }
   }
 
@@ -48,7 +49,7 @@ class LogDetail extends Component {
       throw new LogNotFound(response.message);
     }
 
-    if (response.error.includes('Failed to convert')) {
+    if (response.error && response.error.includes('Failed to convert')) {
       throw new NotFoundPage('Página não encontrada');
     }
 
@@ -66,32 +67,34 @@ class LogDetail extends Component {
 
     return this.state.isAuthenticated
       ? <div className="container-detail" key={log.id} id={log.id}>
-        <div className="bottom-link-wrapper">
-          <Link 
-            to="/logs"
-            className="--change"
-            role="button"
+          <div className="bottom-link-wrapper">
+            <Link
+              to="/logs"
+              className="--change"
+              role="button"
             >Voltar</Link>
-            
-          </div>
-        <div className="container-detail-box">
-          <div className="">
-            <p className="title-detail">Erro no {log.origin} em {log.event_date}</p>
-            <p className="container-detail-subtitle">Título <br></br>{log.title}</p>
-            <p className="container-detail-subtitle">Detalhes <br></br></p>
-            <p>Descrição: {log.description}</p>
-            <p>Origem: {log.origin}</p>
-            <p>Ambiente: {log.environment}</p>
-            <p>Data do evento: {log.event_date}</p>
-            <p>Status: {log.status}</p>
 
-            <div className="detail-right">
-            <p>{log.level}</p>
-            <p className="container-detail-subtitle">Coletado por: <br></br> {sessionStorage.getItem("tokenAccess")}</p>
           </div>
+          <div className="container-detail-box">
+            <div>
+              <p className="title-detail">Erro no {log.origin} em {log.event_date}</p>
+            </div>
+            <div className="detail-wrapper">
+              <div>
+                <p className="container-detail-subtitle">Título <br></br>{log.title}</p>
+                <p className="container-detail-subtitle">Detalhes <br></br></p>
+                <p>Descrição: {log.description}</p>
+                <p>Origem: {log.origin}</p>
+                <p>Ambiente: {log.environment}</p>
+                <p>Data do evento: {log.event_date}</p>
+                <p>Status: {log.status}</p>
+              </div>
+              <div className="detail-right">
+                <p>{log.level}</p>
+                <p className="container-detail-subtitle">Coletado por: <br></br> {sessionStorage.getItem("tokenAccess")}</p>
+              </div>
+            </div>
           </div>
-          
-        </div>
         </div>
       : <Loader />
   }

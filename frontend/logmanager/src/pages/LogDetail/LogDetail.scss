@@ -2,9 +2,25 @@
 
 .container-detail-box{
     margin: 10px 32px;
+    padding: 30px;
     background-color: white;
-    
+
+    @media screen and(max-width: $_media-phone) {
+        margin: 0;
     }
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+    @media screen and(max-width: $_media-tablet) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 
 .title-detail{
     font-size: 35px;
@@ -25,7 +41,6 @@
     overflow: auto;
     overflow-x: hidden;
     width: 100%;
-    height: calc(100vh - 246px);
 }
 
 
@@ -36,4 +51,9 @@
 
 .detail-right{
       text-align: right;
+
+      @media screen and(max-width: $_media-tablet) {
+        text-align: left;
+        margin-top: 20px;
+    }
 }
