@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.codenation</groupId>
 	<artifactId>errorcenter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-REALESE</version>
 	<name>errorcenter</name>
 	<description>Projeto Final da Aceleração da Codenation + Quinto Andar. Aplicação Rest para criação de Central de Erros</description>
 
