@@ -10,13 +10,9 @@ export class BaseService {
 
   static header = () => {
     const authToken = sessionStorage.getItem("authToken")
-
-    if (authToken) {
-      return {
-        headers: { Authorization: authToken }
-      }
-    } else {
-      this.header()
+    
+    return {
+      headers: { Authorization: authToken }
     }
   }
 

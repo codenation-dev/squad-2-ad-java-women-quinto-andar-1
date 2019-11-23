@@ -17,8 +17,9 @@ const Routes = (props) => (
         <Route path='/sign-up' exact component={SignUp} />
         <Route path='/logs' exact component={LogsList} />
         <Route path='/logs/:id' exact component={LogDetail} />
-        <Route path='/error' exact component={NotFound} />
+        <Route path='/error404' exact component={NotFound} />
         <Route path='/error500' exact component={Error500} />
+        <Route exact component={NotFound} />
       </Switch>
     </Header>
   </BrowserRouter>

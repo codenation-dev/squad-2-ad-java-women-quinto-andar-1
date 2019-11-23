@@ -12,9 +12,9 @@ class Header extends Component {
     }
     render() {
         const { pathname } = this.props.location
-        const hiddenHeaderPages = ['/', '/login', '/sign-up']
+        const visibleHeaderPage = '/logs'
 
-        return !hiddenHeaderPages.includes(pathname)
+        return pathname.includes(visibleHeaderPage)
             ? <>
                 <header className='header'>
                     <div className='header-left'>

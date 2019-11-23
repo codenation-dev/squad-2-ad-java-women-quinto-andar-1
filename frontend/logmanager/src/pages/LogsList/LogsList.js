@@ -8,6 +8,8 @@ import { FixedFilter } from '../../components/organisms/Filter/FixedFilter';
 import { LogContainer } from '../../components/molecules/logContainer/logContainer';
 import { OptionsList } from '../../components/organisms/OptionsList/OptionsList';
 import './LogsList.scss';
+import { NoLogSelected, ExpiredUserToken } from '../../errors/WepAppErrors';
+import { userNotification } from '../../errors/UserNotifications';
 
 class LogsList extends Component {
   state = {
@@ -52,22 +54,33 @@ class LogsList extends Component {
   }
 
   changeStatus = async (e, status) => {
-    e.preventDefault();
+    try {
+      e.preventDefault()
 
-    const logsIds = this.state.logs.filter(log => log.isChecked)
-      .map(log => log.id)
+      const logsIds = this.state.logs.filter(log => log.isChecked)
+        .map(log => log.id)
+      
+      if (!logsIds.length) {
+        throw new NoLogSelected()
+      }
+  
+      const body = {
+        ids: logsIds,
+        status,
+      }
 
-    const body = {
-      ids: logsIds,
-      status,
-    }
-    await RequestService.changeStatus(body)
-    const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
-
-    if (updatedLogs.data) {
-      this.setState({
-        logs: updatedLogs.data
-      })
+      await RequestService.changeStatus(body);
+      const updatedLogs = await RequestService.getLogsByEnvironment(this.state.environment)
+  
+      if (updatedLogs.data) {
+        this.setState({
+          logs: updatedLogs.data,
+        })
+      }
+    } catch (error) {
+      if (error.name === 'NoLogSelected') {
+        userNotification.notifyError(error.message)
+      }
     }
   }
 
@@ -80,30 +93,47 @@ class LogsList extends Component {
   }
   isFindUndefined = (value) => {
     return this.isSomethingInValueUndefined(value.find)
-  }
+	}
+	
+	alterState = (response) => {
+		const logs = response.data.map(log => ({
+			...log,
+			isChecked: false
+		}))
 
-  alterState = (response) =>{
-    const logs = response.data.map(log => ({
-               ...log,
-               isChecked: false
-    }))
-    this.setState({ logs, isLoading: false})
+		this.setState({ logs, isLoading: false})
+	}
+
+  handleResponse = (response) =>{
+    try {
+      if (response.error === 'JWT EXPIRADO') {
+				throw new ExpiredUserToken();
+      }
+  
+      this.alterState(response)
+    } catch (error) {
+			if (error.name === 'ExpiredUserToken') {
+				userNotification.notifyError(error.message)
+				this.props.history.replace('/login');
+			}
+    }
   }
 
   async handleOnSearch(value) {
     this.setState({
       environment: value.environment.value
     })
+    
     if (value.search == undefined) value.search = ''
     
     if (this.isOrderUndefined && this.isFindUndefined && value.search == '') {
-      RequestService.getLogsByEnvironment(value.environment.value, this.alterState)
+      RequestService.getLogsByEnvironment(value.environment.value, this.handleResponse)
     } else if (value.find == undefined && value.search == '') {
-      RequestService.orderLogs(value.environment.value, value.order.value, this.alterState)
+      RequestService.orderLogs(value.environment.value, value.order.value, this.handleResponse)
     } else if (value.find == undefined && value.search != '') {
-      RequestService.searchLogs(value.environment.value, 'description', value.search, this.alterState);
+      RequestService.searchLogs(value.environment.value, 'description', value.search, this.handleResponse);
     } else {
-      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.alterState);
+      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.handleResponse);
     }
   }
 
@@ -144,4 +174,4 @@ class LogsList extends Component {
   }
 }
 
-export default LogsList;
+export default LogsList
