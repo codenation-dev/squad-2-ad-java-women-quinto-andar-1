@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import br.com.codenation.errorcenter.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -25,8 +24,6 @@ public class JwtToken {
 
     private static final String TOKEN_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer";
-
-    private static UserRepository userRepository;
 
     public static String addJwtToken(String userToken) {
         String tokenId = UUID.randomUUID().toString();
