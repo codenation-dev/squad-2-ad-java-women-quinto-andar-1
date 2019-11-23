@@ -106,7 +106,7 @@ class LogsList extends Component {
 
   handleResponse = (response) =>{
     try {
-      if (response.error === 'JWT EXPIRADO') {
+      if (response.error === 'Token Expirado') {
 				throw new ExpiredUserToken();
       }
   
@@ -126,17 +126,23 @@ class LogsList extends Component {
     })
     
     if (value.search == undefined) value.search = ''
-    
+		
+		let response
     if (this.isOrderUndefined(value) && this.isFindUndefined(value) && value.search == '') {
-      RequestService.getLogsByEnvironment(value.environment.value, this.handleResponse)
+      response = await RequestService.getLogsByEnvironment(value.environment.value)
     } else if (value.find == undefined && value.search == '') {
-      this.setState({frequency: true})
-      RequestService.orderLogs(value.environment.value, value.order.value, this.handleResponse)
+      this.setState({
+				frequency: true
+			})
+			
+			response = await RequestService.orderLogs(value.environment.value, value.order.value)
     } else if (value.find == undefined && value.search != '') {
-      RequestService.searchLogs(value.environment.value, 'description', value.search, this.handleResponse);
+			response = await RequestService.searchLogs(value.environment.value, 'description', value.search);
     } else {
-      RequestService.searchLogs(value.environment.value, value.find.value, value.search, this.handleResponse);
-    }
+      response = await RequestService.searchLogs(value.environment.value, value.find.value, value.search);
+		}
+		
+		this.handleResponse(response)
   }
 
   render() {

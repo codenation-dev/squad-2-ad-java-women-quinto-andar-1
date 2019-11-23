@@ -55,7 +55,7 @@ class LogDetail extends Component {
       throw new InternalServerError();
     }
 
-    if (response.error === 'JWT EXPIRADO') {
+    if (response.error === 'Token Expirado') {
       throw new ExpiredUserToken();
     }
   }
