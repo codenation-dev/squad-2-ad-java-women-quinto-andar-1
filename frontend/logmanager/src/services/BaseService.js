@@ -1,27 +1,23 @@
 import axios from 'axios';
 export class BaseService {
   static handleError(error) {
-    // TODO: implementar sistema de notificações de erro
-    // user intercept do axios ?
-    console.log(error)
+    return {
+      status: error.response.status,
+      error: error.response.data.error,
+      message: error.response.data.message,
+    }
   }
 
   static header = () => {
     const authToken = sessionStorage.getItem("authToken")
-
-    if (authToken) {
-      return {
-        headers: { Authorization: authToken }
-      }
-    } else {
-      this.header()
+    
+    return {
+      headers: { Authorization: authToken }
     }
   }
 
-  static get = async (url) => {
-    return await axios.get(url, this.header())
-      .catch(e => this.handleError(e))
-  };
+  static get = async (url) => await axios.get(url, this.header())
+    .catch(e => this.handleError(e));
 
   static post = async (url, body) => {
     if (url.includes('user')) {

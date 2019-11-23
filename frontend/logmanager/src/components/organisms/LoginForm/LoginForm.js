@@ -5,9 +5,12 @@ import Form from '../../atoms/Form/Form';
 import Field from '../../molecules/Field/Field';
 import Button from '../../atoms/Button/Button';
 import FormLink from '../../atoms/FormLink/FormLink';
+import Logo from '../../../static/images/Sherlog_Final_001.png';
+
 
 const LoginForm = ({onSubmit, onChange, isLoading, ...props}) => (
 	<Card>
+    <img src={Logo} className="logo-size"/>
     <Form onSubmit={onSubmit}>
       <Field
         label="E-mail"
@@ -25,15 +28,12 @@ const LoginForm = ({onSubmit, onChange, isLoading, ...props}) => (
         value={props.password}
         disabled={isLoading}
       />
-      <Button disabled={isLoading}>
+      <Button disabled={isLoading} className='--form' value='Logar'>
         Logar
       </Button>
-      <div className='bottom-link-wrapper'>
-        <p className='mr-10'>Chegou agora?</p>
-        <FormLink route='/sign-up' isDisabled={isLoading}>
-          Cadastre-se
-        </FormLink>
-      </div>
+      <FormLink route='/sign-up' isDisabled={isLoading} value='Chegou agora?'>
+        Cadastre-se
+      </FormLink>
     </Form>
   </Card>
 );

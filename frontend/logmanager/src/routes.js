@@ -5,20 +5,23 @@ import SignUp from './pages/SignUp/SignUp';
 import LogsList from './pages/LogsList/LogsList';
 import LogDetail from './pages/LogDetail/LogDetail';
 import NotFound from './pages/NotFound/NotFound';
-import Menu from './components/organisms/Menu/Menu';
+import Header from './components/organisms/Header/Header';
+import Error500 from './pages/Error500/Error500';
 
 const Routes = (props) => (
   <BrowserRouter>
-    <Menu onLogOut={props.onLogOut}>
+    <Header onLogOut={props.onLogOut}>
       <Switch>
         <Route path='/' exact component={Login} />
         <Route path='/login' exact component={Login} />
         <Route path='/sign-up' exact component={SignUp} />
         <Route path='/logs' exact component={LogsList} />
         <Route path='/logs/:id' exact component={LogDetail} />
-        <Route component={NotFound} />
+        <Route path='/error404' exact component={NotFound} />
+        <Route path='/error500' exact component={Error500} />
+        <Route exact component={NotFound} />
       </Switch>
-    </Menu>
+    </Header>
   </BrowserRouter>
 );
 

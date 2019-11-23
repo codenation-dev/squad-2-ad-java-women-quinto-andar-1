@@ -1,0 +1,101 @@
+@import '../../../style/style.scss';
+
+.filter{
+    background-color: $_white;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap-reverse;
+    justify-content: space-evenly;
+
+    &-selects{
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 50%;
+        &-select{
+            width: 160px;
+            color: $_purple !important;
+            margin-right: 8px;
+            flex-wrap: wrap;
+            
+            div{
+                border: none !important;
+                color: $_purple;
+            }
+            &:focus, &:active{
+                border: none !important;
+                border-color: none !important;
+                outline: 0 !important;
+                box-shadow: none !important;
+            }
+            .css-1pahdxg-control{
+                border-color: $_purple-2 !important;
+                box-shadow: 0 0 0 1px $_purple-2 !important;
+                @media screen and(max-width: $_media-phone) {
+                    border-color: transparent !important;
+                    box-shadow: 0 0 0 1px transparent !important;
+                }
+            }
+            .css-26l3qy-menu{
+    
+                .css-4ljt47-MenuList{
+    
+                    .css-9gakcf-option{
+                        background-color: $_purple-2 !important;
+                    }
+                    .css-yt9ioa-option{
+                        &:hover{
+                            background-color: $_light-purple !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    &-search{
+        //width: 60%;
+        width: 50%;
+        min-width: max-content;
+        position: relative;
+
+        svg{
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: $_grey;
+        }
+        @media screen and(max-width: $_media-tablet) {
+            width: 90%;
+            position: absolute;
+            top: 88px;
+          }
+    }
+    @media screen and(max-width: $_media-phone) {
+        padding: 4px;
+        margin-top: 10px;
+        &-selects{
+            width: 98% !important;
+            font-size: $_font-size-small !important;
+            &-select{
+                margin-right: 0 !important;
+                .css-tlfecz-indicatorContainer{
+                    padding: 0 !important;
+                }
+            }
+        }
+      }
+    @media screen and(max-width: $_media-tablet) {
+        &-selects{
+            width: 90%;
+            margin-top: 10px;
+        }
+      }
+}
+
+.css-1okebmr-indicatorSeparator{
+    display: none !important;
+}

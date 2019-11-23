@@ -1,0 +1,68 @@
+/**
+ * Colors
+ */
+$_white:              #fff !default;
+$_black:              #000 !default;
+$_light-grey:		  #FAFAFA !default;
+$_grey:		          #DADADA !default;
+$_dark-grey:          #212121 !default;
+$_light-purple:       #D1C4E9 !default;
+$_purple:             #7E57C2!default;
+$_dark-purple:        #483071 !default;
+$_darker-purple:      #1A0D30 !default;
+$_yellow:             #FFEE99 !default;
+$_dark-yellow:        #FF8113 !default;
+$_shaddow-yellow:     #FFE149 !default;
+$_red:                #FF6866 !default;
+$_dark-red:           #6f0503 !default;
+$_shaddow-red:        rgba(255, 0, 0, 0.5) !default;
+$_purple-2:           #A77BF4 !default;
+$_dark-purple-2:      #834DDF !default;
+$_shadow-purple-2:    rgba(126, 87, 194, 0.5);
+$_info:               #92c7fdeb !default;
+$_info-text:          #0d47a1!default;
+$_info-shadow:          $_info;
+$_fatal:               #8e8e8e !default;
+$_fatal-text:            $_white;
+$_fatal-shadow:         $_grey;
+
+
+/**
+ * Typography
+ */
+$_font-primary:     'Share Tech Mono', monospace !default;
+$_font-secondary:   'Roboto Mono', monospace !default;
+$_font-title:       'Roboto', sans-serif !default;
+//$_font-primary:     'Inconsolata', monospace !default;
+//$_font-secondary:   'Oswald', monospace !default;
+
+$_font-size-base:       16px !default;
+$_font-size-small:      14px !default;
+$_font-size-medium:     $_font-size-base;
+$_font-size-large:      21px !default;
+
+$_font-weight-light:	300 !default;
+$_font-weight-base:		400 !default;
+$_font-weight-bold:		700 !default;
+
+/**
+ * Settings body
+ */
+$_body-bg:			$_white;
+$_text-color-base:	$_black;
+$_text-color-input: $_dark-grey;
+
+/**
+ * Custom styles
+ */
+$_radius:       5px !default;
+$_shadow:      0px 0px 10px rgba(0, 0, 0, 0.09);
+
+
+/**
+* Media Query
+*/
+
+$_media-phone: 500px !default;
+$_media-tablet: 768px !default;
+$_media-desktop: 1024px !default;

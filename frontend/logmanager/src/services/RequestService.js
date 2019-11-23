@@ -11,7 +11,7 @@ export class RequestService extends BaseService {
 
   static searchLogs = async (env, filter, query) => this.get(`${this.BASE_URL}/log/${env}?filter=${filter}&value=${query}`)
 
-  static orderLogs = async (env, order) => this.get(`${this.BASE_URL}/log/${env}?order=${order}`)
+  static orderLogs =  async (env, order) => this.get(`${this.BASE_URL}/log/${env}?order=${order}`)
 
   static changeStatus = async (body) => this.patch(`${this.BASE_URL}/log/status`, body)
 

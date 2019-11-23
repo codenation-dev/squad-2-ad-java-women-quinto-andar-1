@@ -3,6 +3,8 @@ import SignUpForm from '../../components/organisms/SignUpForm/SignUpForm';
 import { RequestService } from '../../services/RequestService';
 import './SignUp.css';
 import Loader from '../../components/molecules/Loader/Loader';
+import { EmptyField, InvalidEmail, EmptyFields, UserAlreadyExists, DefaultError, InternalServerError } from '../../errors/WepAppErrors';
+import { userNotification } from '../../errors/UserNotifications';
 
 class SignUp extends Component {
   state = {
@@ -20,27 +22,28 @@ class SignUp extends Component {
     });
   }
 
-  redirectToMainPage = () => {
-    const authToken = sessionStorage.getItem("authToken");
-    const { history } = this.props;
+  // redirectToMainPage = () => {
+  //   const authToken = sessionStorage.getItem("authToken");
+  //   const { history } = this.props;
 
-    if (authToken) {
-      this.setState({
-        isLoading: false
-      })
+  //   if (authToken) {
+  //     this.setState({
+  //       isLoading: false
+  //     })
 
-      history.push('/logs');
-    } else {
-      this.redirectToMainPage();
-    }
-  }
+  //     history.push('/logs');
+  //   } else {
+  //     this.redirectToMainPage();
+  //   }
+  // }
 
   onSubmit = async (e) => {
-    e.preventDefault();
-
-    const { name, email, password } = this.state;
-
     try {
+      e.preventDefault();
+
+      const { history } = this.props;
+      const { name, email, password } = this.state;
+
       this.validateFields(name, email, password);
 
       this.setState({
@@ -54,11 +57,31 @@ class SignUp extends Component {
       };
 
       const response = await RequestService.signUp(body);
+
+      if (response.error === 'ERROR_USER_EMAIL_EXISTS') {
+        throw new UserAlreadyExists(response.message);
+      }
+
+      if (response.status === 400) {
+        throw new DefaultError(response.message);
+      }
+
+      if (response.status === 500) {
+        throw new InternalServerError();
+      }
+
       sessionStorage.setItem("authToken", response.headers["authorization"]);
 
-      this.redirectToMainPage()
+      // talvez não precise do redirectToMainPage
+       //this.redirectToMainPage()
+
+      this.setState({
+        isLoading: false
+      })
+
+      history.push('/login');
     } catch (e) {
-      console.log(e);
+      userNotification.notifyError(e.message)
 
       this.setState({
         isLoading: false
@@ -75,21 +98,24 @@ class SignUp extends Component {
   }
 
   validateFields = (name, email, password) => {
-    // TODO criar erros de validação padrão de front em outro arquivo
+    if (!name && !email && !password) {
+      throw new EmptyFields('Os campos estão vazios!')
+    }
+
     if (!name) {
-      throw new Error('Preencha o nome');
+      throw new EmptyField('nome');
     }
 
     if (!email) {
-      throw new Error('Preencha o email');
-    }
+      throw new EmptyField('e-mail');
+    } 
     
     if (!password) {
-      throw new Error('Preencha a senha');
+      throw new EmptyField('senha');
     }
 
     if (!email.includes('@') || !email.includes('.')) {
-      throw new Error('Email inválido');
+      throw new InvalidEmail('Email inválido');
     }
   }
 

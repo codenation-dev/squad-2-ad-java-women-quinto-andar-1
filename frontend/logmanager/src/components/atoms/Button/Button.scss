@@ -1,0 +1,52 @@
+@import '../../../style/style.scss';
+
+.button{
+    font-family: $_font-primary;
+    font-size: $_font-size-base;
+    height: 42px;
+    padding: 8px;
+    margin: 10px;
+    transition: 0.25s ease;
+    cursor: pointer;
+    text-transform: uppercase;
+    &.--form{
+        background-color: $_purple;
+        color: $_white;
+        width: 100%;
+        margin: 32px 0px 0px;
+        border-radius: $_radius;
+        &:hover{
+            background-color: $_dark-purple;
+        }
+    }
+    &.--white{
+        text-transform: none;
+        background-color: $_white;
+        color: $_purple;
+        width: 100%;
+        margin: 32px 0px 0px;
+        border-radius: $_radius;
+        &:hover{
+            background-color: $_dark-purple;
+            color: $_white;
+        }
+    }
+    &.--change{
+        width: 100px;
+        background: transparent;
+        height: 32px;
+        color: $_dark-purple;
+        &:hover{
+            border-bottom: 2px solid $_dark-purple-2;
+            color: $_purple;
+        }
+        @media screen and(max-width: $_media-phone) {
+            //border-bottom: 1px solid $_dark-yellow;
+        }
+    }
+    &.disabled {
+        cursor: none;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}

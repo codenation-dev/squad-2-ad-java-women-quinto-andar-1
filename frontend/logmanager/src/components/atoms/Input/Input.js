@@ -1,8 +1,8 @@
 import React from 'react';
-import './Input.css';
+import './Input.scss';
 
-const Input = ({ type, name, onChange, value, ...props }) => (
-  <input className="form-control"
+const Input = ({ className, type, name, onChange, value, ...props }) => (
+  <input className={'input ' + className }
     type={type} 
     name={name} 
     onChange={onChange} 

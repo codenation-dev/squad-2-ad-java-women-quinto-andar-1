@@ -1,8 +1,8 @@
 import React from 'react';
-import './Button.css';
+import './Button.scss';
 
 const Button = ({ disabled, children, ...props }) => (
-	<button className={disabled ? "btn disabled" : "btn"} {...props}>
+	<button {...props} className={disabled ? "button disabled " : "button " + props.className}>
 		{children}
 	</button>
 );

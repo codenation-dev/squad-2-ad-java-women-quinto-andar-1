@@ -1,0 +1,19 @@
+@import '../../../style/style.scss';
+.container{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &-box{
+    width: 400px;
+    height: 400px;
+    padding: 8px;
+    position: relative;
+
+    @media screen and(max-width: $_media-phone) {
+      width: 280px;
+    }
+  }
+}

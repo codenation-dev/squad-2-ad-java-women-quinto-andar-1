@@ -1,11 +1,11 @@
 import React from 'react';
-import './Card.css';
+import './Card.scss';
 
 const Card = props => (
-  <div className="content">
-  <div className="container-principal">
-    {props.children}
-  </div>
+  <div className="container">
+    <div className="container-box">
+        {props.children}
+    </div>
   </div>
 );
 
