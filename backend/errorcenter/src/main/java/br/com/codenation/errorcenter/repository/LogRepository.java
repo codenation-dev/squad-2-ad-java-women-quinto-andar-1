@@ -19,7 +19,7 @@ import br.com.codenation.errorcenter.models.Log;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, Long>{
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
 			+ "WHERE l.id=:ids ", nativeQuery = true)
@@ -30,7 +30,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 	@Query(value = "UPDATE tb_logs SET status=:status WHERE id in (:ids)", nativeQuery = true) 
 	public void update(@Param("ids") List<Long> ids, @Param("status") String status);
 
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
 			+ "WHERE l.environment=:environment "
@@ -39,7 +39,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "ORDER BY l.event_date DESC", nativeQuery = true)
 	public List<LogResponseDTO> findByEnvironmentAndLevel(@Param("environment") String environment, @Param("level") String level);
 
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
 			+ "WHERE l.environment=:environment "
@@ -48,7 +48,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "ORDER BY l.event_date DESC", nativeQuery = true)
 	public List<LogResponseDTO> findByEnvironmentAndDescription(@Param("environment") String environment, @Param("description") String description);
 
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
 			+ "WHERE l.environment=:environment "
@@ -57,7 +57,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
 			+ "ORDER BY l.event_date DESC", nativeQuery = true)
 	public List<LogResponseDTO> findByEnvironmentAndOrigin(@Param("environment") String environment, @Param("origin") String origin);
 
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
             + "WHERE l.environment=:environment "
@@ -65,7 +65,7 @@ public interface LogRepository extends JpaRepository<Log, Long>{
             + "ORDER BY l.event_date DESC", nativeQuery = true)
     public List<LogResponseDTO> findByEnvironmentAndOrderByDate(String environment);
 
-	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.tokenAccess "
+	@Query(value = "SELECT l.id, l.title, l.description, l.environment, l.event_date, l.level, l.origin, l.status, u.token_access "
 			+ "FROM tb_logs as l "
 			+ "INNER JOIN tb_user as u on l.user_id = u.id "
 			+ "WHERE l.environment=:environment "
